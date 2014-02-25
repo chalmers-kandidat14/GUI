@@ -40,9 +40,14 @@ public class createOptionPanel implements ActionListener {
 				// When the "Change Layout" button is clicked
 				// the GridLayout of the buttonPanel is changed
 				// based on the grid size and spacing values chosen
-				int xCoordinate = Integer.parseInt(xTextField.getText());
-				int yCoordinate = Integer.parseInt(yTextField.getText());
-				int zCoordinate = Integer.parseInt(zTextField.getText());
+				float xCoordinate = Float.parseFloat(xTextField.getText());
+				float yCoordinate = Float.parseFloat(yTextField.getText());
+				float zCoordinate = Float.parseFloat(zTextField.getText());
+				
+				BallFrame.setX(xCoordinate);
+				BallFrame.setY(yCoordinate);
+				BallFrame.setZ(zCoordinate);
+				
 			}
 		});
 
