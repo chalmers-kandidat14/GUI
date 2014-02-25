@@ -43,10 +43,10 @@ public class BallFrame extends GLCanvas implements GLEventListener,
 	// Setup OpenGL Graphics Renderer
 
 	private GLU glu; // for the GL Utility
-	private float dist = 30f;
-	private float x1 = 4f;
-	private float y1 = -7f;
-	private float z1 = -16.0f;
+	private static float dist = 30f;
+	private static float x1 = 4f;
+	private static float y1 = -7f;
+	private static float z1 = -16.0f;
 
 	/** Constructor to setup the GUI for this Component */
 	public BallFrame() {
@@ -161,6 +161,20 @@ public class BallFrame extends GLCanvas implements GLEventListener,
 		gl.glDisable(GL2.GL_LIGHT1);
 		gl.glDisable(GL2.GL_LIGHTING);
 	}
+	
+	public static void setX(float x) {
+		x1 = x;
+	}
+	
+	public static void setY(float y) {
+		y1 = y;
+	}
+	
+	public static void setZ(float z) {
+		z1 = z;
+	}
+	
+	
 
 	private void setCamera(GL2 gl, GLU glu, float distance) {
 		// Change to projection matrix.

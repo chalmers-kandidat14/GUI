@@ -5,6 +5,7 @@ import java.awt.event.WindowEvent;
 
 import javax.media.opengl.awt.GLCanvas;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -14,7 +15,7 @@ public class Main {
 	static JFrame guiFrame;
 	static Container contentPane;
 	
-	private static int WIDTH = 1000;
+	private static int WIDTH = 1240;
 	private static int HEIGHT = 640;
 	
 	public static void main(String[] args) {
@@ -24,6 +25,7 @@ public class Main {
 			public void run() {
 				
 				guiFrame = new JFrame();
+				guiFrame.setLayout(new BorderLayout(10, 10));
 				guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				guiFrame.setTitle("Protein folding");
 				guiFrame.setSize(WIDTH, HEIGHT);
@@ -33,11 +35,14 @@ public class Main {
 				GLCanvas canvas = BallFrame.createBallFrame();
 				// Create the top-level container
 
-				contentPane.add(canvas);
+				contentPane.add(canvas, BorderLayout.EAST);
 				
 				JPanel optFrame = createOptionPanel.createOpt();
 				
-				guiFrame.add(optFrame, BorderLayout.WEST);
+				guiFrame.add(optFrame, BorderLayout.CENTER);
+				guiFrame.add(new JLabel(""), BorderLayout.PAGE_END);
+				guiFrame.add(new JLabel(""), BorderLayout.PAGE_START);
+				guiFrame.add(new JLabel(""), BorderLayout.WEST);
 				
 				guiFrame.setTitle(TITLE);
 				guiFrame.pack();
