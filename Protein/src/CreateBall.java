@@ -5,22 +5,20 @@ public class CreateBall {
 	private static HashMap<Integer, Float> positionsX = new HashMap<Integer, Float>();
 	private static HashMap<Integer, Float> positionsY = new HashMap<Integer, Float>();
 	private static HashMap<Integer, Float> positionsZ = new HashMap<Integer, Float>();
-	private int ID;
 	
-	public void addBall(int ID, float x, float y, float z) {
-		this.ID = ID;
-		setX(x);
-		setY(y);
-		setZ(z);
+	public static void addBall(int ID, float x, float y, float z) {
+		setX(ID, x);
+		setY(ID, y);
+		setZ(ID, z);
 	}
 	
-	public void setX(float x) {
+	public static void setX(int ID, float x) {
 		positionsX.put(ID, x);
 	}
-	public void setY(float y) {
+	public static void setY(int ID, float y) {
 		positionsY.put(ID, y);
 	}
-	public void setZ(float z) {
+	public static void setZ(int ID, float z) {
 		positionsZ.put(ID, z);
 	}
 	

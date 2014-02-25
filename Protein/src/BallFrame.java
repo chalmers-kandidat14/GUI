@@ -41,9 +41,10 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 
 	private GLU glu; // for the GL Utility
 	private static float dist = 30f;
-	private static float x1 = 0f;
-	private static float y1 = 0f;
-	private static float z1 = -16.0f;
+	final float radius = 1f;
+	final int slices = 16;
+	final int stacks = 16;
+	private static int balls = 0;
 
 	/** Constructor to setup the GUI for this Component */
 	public BallFrame() {
@@ -137,17 +138,17 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, rgba, 0);
 		gl.glMaterialf(GL.GL_FRONT, GL2.GL_SHININESS, 0.5f);
 
-		// Draw sphere (possible styles: FILL, LINE, POINT).
-		//gl.glLoadIdentity(); // reset the model-view matrix
-		//gl.glTranslatef(x1, y1, z1);
-
+		for (int i = 0; i < balls; i++) {
+			display(gl, i);
+		}
+		
+		gl.glLoadIdentity();
+		gl.glTranslatef(0f, 0f, -16f);
+		
 		GLUquadric sphere = glu.gluNewQuadric();
 		glu.gluQuadricDrawStyle(sphere, GLU.GLU_FILL);
 		glu.gluQuadricNormals(sphere, GLU.GLU_FLAT);
 		glu.gluQuadricOrientation(sphere, GLU.GLU_OUTSIDE);
-		final float radius = 1f;
-		final int slices = 16;
-		final int stacks = 16;
 		glu.gluSphere(sphere, radius, slices, stacks);
 		glu.gluDeleteQuadric(sphere);
 
@@ -156,21 +157,23 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		gl.glDisable(GL2.GL_LIGHTING);
 	}
 
-	public static void setX(float x) {
-		x1 = x;
-	}
-
-	public static void setY(float y) {
-		y1 = y;
-	}
-
-	public static void setZ(float z) {
-		z1 = z;
-	}
-
 	private void display(GL2 gl, int i) {
 		gl.glLoadIdentity();
 		gl.glTranslatef(CreateBall.getX(i), CreateBall.getY(i), CreateBall.getZ(i));
+		
+		GLUquadric sphere = glu.gluNewQuadric();
+		glu.gluQuadricDrawStyle(sphere, GLU.GLU_FILL);
+		glu.gluQuadricNormals(sphere, GLU.GLU_FLAT);
+		glu.gluQuadricOrientation(sphere, GLU.GLU_OUTSIDE);
+		glu.gluSphere(sphere, radius, slices, stacks);
+	}
+	
+	public static void incrBall(){
+		balls++;
+	}
+	
+	public static int getBalls() {
+		return balls;
 	}
 
 	private void setCamera(GL2 gl, GLU glu, float distance) {

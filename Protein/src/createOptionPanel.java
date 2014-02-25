@@ -39,10 +39,9 @@ public class createOptionPanel implements ActionListener {
 				float yCoordinate = Float.parseFloat(yTextField.getText());
 				float zCoordinate = Float.parseFloat(zTextField.getText());
 				
-				BallFrame.setX(xCoordinate);
-				BallFrame.setY(yCoordinate);
-				BallFrame.setZ(zCoordinate);
-				
+				CreateBall.addBall(BallFrame.getBalls(), xCoordinate, yCoordinate, zCoordinate);
+				BallFrame.incrBall();
+
 			}
 		});
 
