@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 
-import javax.swing.*;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAnimatorControl;
@@ -20,22 +19,20 @@ import static javax.media.opengl.GL2.*; // GL2 constants
  * JOGL 2.0 Example 2: Rotating 3D Shapes (GLCanvas)
  */
 @SuppressWarnings("serial")
-public class BallFrame extends GLCanvas implements GLEventListener,
-		KeyListener {
+public class BallFrame extends GLCanvas implements GLEventListener, KeyListener {
 	// Define constants for the top-level container
-	
+
 	private static int CANVAS_WIDTH = 720; // width of the drawable
 	private static int CANVAS_HEIGHT = 640; // height of the drawable
 	private static final int FPS = 60; // animator's target frames per second
-	
+
 	public static GLCanvas createBallFrame() {
 		// Create the OpenGL rendering canvas
 		GLCanvas canvas = new BallFrame();
-		canvas.setPreferredSize(new Dimension(CANVAS_WIDTH,
-				CANVAS_HEIGHT));
+		canvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
 
 		final FPSAnimator animator = new FPSAnimator(canvas, FPS, true);
-		
+
 		animator.start(); // start the animation loop
 		return canvas;
 	}
@@ -44,8 +41,8 @@ public class BallFrame extends GLCanvas implements GLEventListener,
 
 	private GLU glu; // for the GL Utility
 	private static float dist = 30f;
-	private static float x1 = 4f;
-	private static float y1 = -7f;
+	private static float x1 = 0f;
+	private static float y1 = 0f;
 	private static float z1 = -16.0f;
 
 	/** Constructor to setup the GUI for this Component */
@@ -69,9 +66,9 @@ public class BallFrame extends GLCanvas implements GLEventListener,
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // set background (clear) color
 		gl.glClearDepth(1.0f); // set clear depth value to farthest
 		gl.glEnable(GL_DEPTH_TEST); // enables depth testing
-		gl.glDepthFunc(GL_LEQUAL); 
-		gl.glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); 
-		gl.glShadeModel(GL_SMOOTH); 
+		gl.glDepthFunc(GL_LEQUAL);
+		gl.glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+		gl.glShadeModel(GL_SMOOTH);
 	}
 
 	/**
@@ -115,10 +112,7 @@ public class BallFrame extends GLCanvas implements GLEventListener,
 	public void display(GLAutoDrawable drawable) {
 
 		GL2 gl = drawable.getGL().getGL2(); // get the OpenGL 2 graphics context
-		gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear color
-																// and depth
-																// buffer;
-
+		gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		// Set camera.
 		setCamera(gl, glu, dist);
 
@@ -138,14 +132,14 @@ public class BallFrame extends GLCanvas implements GLEventListener,
 		gl.glEnable(GL2.GL_LIGHTING);
 
 		// Set material properties.
-		float[] rgba = { 0.3f, 0.5f, 1f };
+		float[] rgba = { 0.8f, 0.1f, 0.1f };
 		gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, rgba, 0);
 		gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, rgba, 0);
 		gl.glMaterialf(GL.GL_FRONT, GL2.GL_SHININESS, 0.5f);
 
 		// Draw sphere (possible styles: FILL, LINE, POINT).
-		gl.glLoadIdentity(); // reset the model-view matrix
-		gl.glTranslatef(x1, y1, z1);
+		//gl.glLoadIdentity(); // reset the model-view matrix
+		//gl.glTranslatef(x1, y1, z1);
 
 		GLUquadric sphere = glu.gluNewQuadric();
 		glu.gluQuadricDrawStyle(sphere, GLU.GLU_FILL);
@@ -161,20 +155,23 @@ public class BallFrame extends GLCanvas implements GLEventListener,
 		gl.glDisable(GL2.GL_LIGHT1);
 		gl.glDisable(GL2.GL_LIGHTING);
 	}
-	
+
 	public static void setX(float x) {
 		x1 = x;
 	}
-	
+
 	public static void setY(float y) {
 		y1 = y;
 	}
-	
+
 	public static void setZ(float z) {
 		z1 = z;
 	}
-	
-	
+
+	private void display(GL2 gl, int i) {
+		gl.glLoadIdentity();
+		gl.glTranslatef(CreateBall.getX(i), CreateBall.getY(i), CreateBall.getZ(i));
+	}
 
 	private void setCamera(GL2 gl, GLU glu, float distance) {
 		// Change to projection matrix.
