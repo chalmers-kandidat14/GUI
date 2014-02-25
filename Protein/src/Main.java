@@ -1,7 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.media.opengl.awt.GLCanvas;
 import javax.swing.JFrame;
