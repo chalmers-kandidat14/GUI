@@ -40,8 +40,8 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	// Setup OpenGL Graphics Renderer
 
 	private GLU glu; // for the GL Utility
-	private static float dist = 30f;
-	final float radius = 1f;
+	private static float dist = 45f;
+	final float radius = 0.5f;
 	final int slices = 16;
 	final int stacks = 16;
 	private static int balls = 0;
@@ -143,7 +143,7 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		}
 		
 		gl.glLoadIdentity();
-		gl.glTranslatef(0f, 0f, -16f);
+		gl.glTranslatef(0f, 0f, 0f);
 		
 		GLUquadric sphere = glu.gluNewQuadric();
 		glu.gluQuadricDrawStyle(sphere, GLU.GLU_FILL);
