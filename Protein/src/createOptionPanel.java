@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +15,7 @@ import javax.swing.border.Border;
 
 
 public class createOptionPanel implements ActionListener {
-	public static JTextField xTextField, yTextField;
+	public static JTextField xTextField, yTextField, zTextField;
 	private static int WIDTH = 520;
 	private static int HEIGHT = 300;
 	
@@ -23,12 +24,13 @@ public class createOptionPanel implements ActionListener {
 		JPanel optGUI = new JPanel();
 		JPanel GUI = new JPanel();
 		
-		optGUI.setLayout(new BorderLayout());
+		
+		optionPanel.setLayout(new GridLayout(3, 2, 0, 5));
+		
+		optGUI.setLayout(new BorderLayout(0, 10));
+		
 		GUI.setLayout(new BorderLayout());
 		GUI.setSize(WIDTH, HEIGHT);
-		
-		Border outline = BorderFactory.createLineBorder(Color.black);
-		optionPanel.setBorder(outline);
 
 		JButton addBall = new JButton("Add");
 		addBall.setActionCommand("Add");
@@ -40,25 +42,32 @@ public class createOptionPanel implements ActionListener {
 				// based on the grid size and spacing values chosen
 				int xCoordinate = Integer.parseInt(xTextField.getText());
 				int yCoordinate = Integer.parseInt(yTextField.getText());
+				int zCoordinate = Integer.parseInt(zTextField.getText());
 			}
 		});
 
 		JLabel coordTitle = new JLabel("Coordinates");
 		JLabel xCoord = new JLabel("X: ");
 		JLabel yCoord = new JLabel("Y: ");
+		JLabel zCoord = new JLabel("Z: ");
+		
+		xCoord.setHorizontalAlignment(JLabel.RIGHT);
+		yCoord.setHorizontalAlignment(JLabel.RIGHT);
+		zCoord.setHorizontalAlignment(JLabel.RIGHT);
 
-		// Left side is a 2 x 2 gridlayout
-		optionPanel.setLayout(new GridLayout(2, 2));
-
-		xTextField = new JTextField(3);
+		xTextField = new JTextField(1);
 		xTextField.setHorizontalAlignment(JTextField.RIGHT);
-		yTextField = new JTextField(3);
+		yTextField = new JTextField(1);
 		yTextField.setHorizontalAlignment(JTextField.RIGHT);
+		zTextField = new JTextField(1);
+		zTextField.setHorizontalAlignment(JTextField.RIGHT);
 
 		optionPanel.add(xCoord);
 		optionPanel.add(xTextField);
 		optionPanel.add(yCoord);
 		optionPanel.add(yTextField);
+		optionPanel.add(zCoord);
+		optionPanel.add(zTextField);
 		
 		optGUI.add(optionPanel, BorderLayout.CENTER);
 		optGUI.add(coordTitle, BorderLayout.PAGE_START);
