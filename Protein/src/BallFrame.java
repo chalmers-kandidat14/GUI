@@ -40,11 +40,13 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	// Setup OpenGL Graphics Renderer
 
 	private GLU glu; // for the GL Utility
-	private static float dist = 45f;
-	final float radius = 0.5f;
+	private static float dist = 10f;
+	final float radius = 0.25f;
 	final int slices = 16;
 	final int stacks = 16;
 	private static int balls = 0;
+	private static float angle = 0;
+	private static float angleSpeed = 0.1f;
 
 	/** Constructor to setup the GUI for this Component */
 	public BallFrame() {
@@ -141,10 +143,16 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		for (int i = 0; i < balls; i++) {
 			display(gl, i);
 		}
-		
+
+		angle += angleSpeed;
+
+		if (Math.abs(angle) > 10f) {
+			angleSpeed = -angleSpeed;
+		}
+
 		gl.glLoadIdentity();
 		gl.glTranslatef(0f, 0f, 0f);
-		
+
 		GLUquadric sphere = glu.gluNewQuadric();
 		glu.gluQuadricDrawStyle(sphere, GLU.GLU_FILL);
 		glu.gluQuadricNormals(sphere, GLU.GLU_FLAT);
@@ -155,23 +163,46 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		// disable lightning
 		gl.glDisable(GL2.GL_LIGHT1);
 		gl.glDisable(GL2.GL_LIGHTING);
+
+		for (int i = 0; i < balls; i++) {
+			if (i > 0) {
+				float currX = CreateBall.getX(i);
+				float currY = CreateBall.getY(i);
+				float currZ = CreateBall.getZ(i);
+				float prevX = CreateBall.getX(i - 1);
+				float prevY = CreateBall.getY(i - 1);
+				float prevZ = CreateBall.getZ(i - 1);
+				
+				gl.glLoadIdentity();
+				gl.glBegin(GL_LINES);
+					gl.glLineWidth(1.f);
+					gl.glColor3f(0.0f, 1.0f, 0.0f); // Green
+					gl.glVertex3f(currX, currY, currZ);
+					gl.glVertex3f(prevX, prevY, prevZ);
+				gl.glEnd();
+			}
+		}
 	}
 
 	private void display(GL2 gl, int i) {
 		gl.glLoadIdentity();
-		gl.glTranslatef(CreateBall.getX(i), CreateBall.getY(i), CreateBall.getZ(i));
-		
+		float currX = CreateBall.getX(i);
+		float currY = CreateBall.getY(i);
+		float currZ = CreateBall.getZ(i);
+		gl.glTranslatef(currX, currY, currZ);
+
 		GLUquadric sphere = glu.gluNewQuadric();
 		glu.gluQuadricDrawStyle(sphere, GLU.GLU_FILL);
 		glu.gluQuadricNormals(sphere, GLU.GLU_FLAT);
 		glu.gluQuadricOrientation(sphere, GLU.GLU_OUTSIDE);
 		glu.gluSphere(sphere, radius, slices, stacks);
+
 	}
-	
-	public static void incrBall(){
+
+	public static void incrBall() {
 		balls++;
 	}
-	
+
 	public static int getBalls() {
 		return balls;
 	}
@@ -184,7 +215,7 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		// Perspective.
 		float widthHeightRatio = (float) getWidth() / (float) getHeight();
 		glu.gluPerspective(45, widthHeightRatio, 1, 1000);
-		glu.gluLookAt(0, 0, distance, 0, 0, 0, 0, 1, 0);
+		glu.gluLookAt(angle + 10f, 10f, distance, 0, 0, 0, 0, 1, 0);
 
 		// Change back to model view matrix.
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
