@@ -32,17 +32,18 @@ public class createOptionPanel implements ActionListener {
 		nextStep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				// When the "Change Layout" button is clicked
-				// the GridLayout of the buttonPanel is changed
-				// based on the grid size and spacing values chosen
-				float xCoordinate = Float.parseFloat(xTextField.getText());
-				float yCoordinate = Float.parseFloat(yTextField.getText());
-				float zCoordinate = Float.parseFloat(zTextField.getText());
-				String MolColor = colTextField.getText();
-				
-				CreateBall.addBall(BallFrame.getBalls(), xCoordinate, yCoordinate, zCoordinate, MolColor);
-				BallFrame.incrBall();
-
+				//Lägg till nästa konformation
+				//lägg till en funktion "moveBall"
+			}
+		});
+		
+		JButton prevStep = new JButton("Previous");
+		prevStep.setActionCommand("Previous");
+		prevStep.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				//Lägg till föregående konformation
+				//lägg till en funktion "moveBall"
 			}
 		});
 				
