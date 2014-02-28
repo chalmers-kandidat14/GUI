@@ -3,15 +3,19 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-
-public class InData {
-    public static void main(String[] args) throws IOException {
-        String fileName = "Exempel.txt";
+import java.util.Scanner;
  
-        List<String> lines = Files.readAllLines(Paths.get(fileName),
-				Charset.defaultCharset());
-		String[] points = lines.toArray(new String[lines.size()]);
-		
-		System.out.println(points);
-	}
+public class InData {
+    public static void main(String[] args) {
+        String fileName = "Exempel.txt";
+		Scanner r;
+ 
+        try {
+            r = new Scanner(fileName);
+			while(r.hasNext()) {
+				System.out.println(r.nextLine());
+			}
+        } catch (IOException e) {
+        }
+    }
 }
