@@ -60,8 +60,6 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	final static float rad = 30f;
 	private static void translater(float x, float y) {
 		zLookAt = (float) Math.sqrt(Math.pow(rad, 2) - Math.pow(x, 2) - Math.pow(y, 2));
-		
-		System.out.println("X: " + x + ", Y: " + y + ", Z: " + zLookAt);
 	}
 	
 
@@ -143,8 +141,6 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		// Enable lighting in GL.
 		gl.glEnable(GL2.GL_LIGHT1);
 		gl.glEnable(GL2.GL_LIGHTING);
-
-		// Set material properties.
 	
 
 		for (int i = 0; i < balls; i++) {
@@ -158,6 +154,14 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		for (int i = 0; i < balls; i++) {
 			drawLines(gl, i);
 		}
+	}
+	
+	public static void incI() {
+		balls++;
+	}
+	
+	public static int retI() {
+		return balls;
 	}
 
 	private void drawLines(GL2 gl, int i) {
@@ -186,14 +190,14 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		float currZ = CreateBall.getZ(i);
 		String colorB = CreateBall.getC(i);
 		gl.glTranslatef(currX, currY, currZ);
-		if(colorB.equals("r")){
+		if(colorB.equals("H")){
 			float[] rgba = { 0.8f, 0.1f, 0.0f };
 			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, rgba, 0);
 			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, rgba, 0);
 			gl.glMaterialf(GL.GL_FRONT, GL2.GL_SHININESS, 0.5f);
 			
 		}
-		else if(colorB.equals("b")){
+		else if(colorB.equals("P")){
 			float[] rgba = { 0.0f, 0.2f, 1.0f };
 			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, rgba, 0);
 			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, rgba, 0);

@@ -26,6 +26,25 @@ public class createOptionPanel implements ActionListener {
 		
 		GUI.setLayout(new BorderLayout());
 		GUI.setSize(WIDTH, HEIGHT);
+		
+		JButton nextStep = new JButton("Next");
+		nextStep.setActionCommand("Next");
+		nextStep.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				// When the "Change Layout" button is clicked
+				// the GridLayout of the buttonPanel is changed
+				// based on the grid size and spacing values chosen
+				float xCoordinate = Float.parseFloat(xTextField.getText());
+				float yCoordinate = Float.parseFloat(yTextField.getText());
+				float zCoordinate = Float.parseFloat(zTextField.getText());
+				String MolColor = colTextField.getText();
+				
+				CreateBall.addBall(BallFrame.getBalls(), xCoordinate, yCoordinate, zCoordinate, MolColor);
+				BallFrame.incrBall();
+
+			}
+		});
 				
 		
 		JButton addBall = new JButton("Add");
