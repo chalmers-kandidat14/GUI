@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 
 
 public class createOptionPanel implements ActionListener {
-	public static JTextField xTextField, yTextField, zTextField;
+	public static JTextField xTextField, yTextField, zTextField, colTextField;
 	private static int WIDTH = 520;
 	private static int HEIGHT = 300;
 	
@@ -20,13 +20,14 @@ public class createOptionPanel implements ActionListener {
 		JPanel GUI = new JPanel();
 		
 		
-		optionPanel.setLayout(new GridLayout(3, 2, 0, 5));
+		optionPanel.setLayout(new GridLayout(4, 2, 0, 5));
 		
 		optGUI.setLayout(new BorderLayout(0, 10));
 		
 		GUI.setLayout(new BorderLayout());
 		GUI.setSize(WIDTH, HEIGHT);
-
+				
+		
 		JButton addBall = new JButton("Add");
 		addBall.setActionCommand("Add");
 		addBall.addActionListener(new ActionListener() {
@@ -38,14 +39,15 @@ public class createOptionPanel implements ActionListener {
 				float xCoordinate = Float.parseFloat(xTextField.getText());
 				float yCoordinate = Float.parseFloat(yTextField.getText());
 				float zCoordinate = Float.parseFloat(zTextField.getText());
+				String MolColor = colTextField.getText();
 				
-				CreateBall.addBall(BallFrame.getBalls(), xCoordinate, yCoordinate, zCoordinate);
+				CreateBall.addBall(BallFrame.getBalls(), xCoordinate, yCoordinate, zCoordinate, MolColor);
 				BallFrame.incrBall();
 
 			}
 		});
 
-		JLabel coordTitle = new JLabel("Coordinates");
+		JLabel coordTitle = new JLabel("Coordinates and\n color on atom");
 		JLabel xCoord = new JLabel("X: ");
 		JLabel yCoord = new JLabel("Y: ");
 		JLabel zCoord = new JLabel("Z: ");
@@ -54,12 +56,21 @@ public class createOptionPanel implements ActionListener {
 		yCoord.setHorizontalAlignment(JLabel.RIGHT);
 		zCoord.setHorizontalAlignment(JLabel.RIGHT);
 
+		
+		//JLabel colorTitle = new JLabel("Color on atom");
+		JLabel atomColor = new JLabel("Color: ");
+		atomColor.setHorizontalAlignment(JLabel.RIGHT);
+		
+		
 		xTextField = new JTextField(1);
 		xTextField.setHorizontalAlignment(JTextField.RIGHT);
 		yTextField = new JTextField(1);
 		yTextField.setHorizontalAlignment(JTextField.RIGHT);
 		zTextField = new JTextField(1);
 		zTextField.setHorizontalAlignment(JTextField.RIGHT);
+		
+		colTextField = new JTextField(1);
+		colTextField.setHorizontalAlignment(JTextField.RIGHT);
 
 		optionPanel.add(xCoord);
 		optionPanel.add(xTextField);
@@ -67,9 +78,12 @@ public class createOptionPanel implements ActionListener {
 		optionPanel.add(yTextField);
 		optionPanel.add(zCoord);
 		optionPanel.add(zTextField);
+		optionPanel.add(atomColor);
+		optionPanel.add(colTextField);
 		
 		optGUI.add(optionPanel, BorderLayout.CENTER);
 		optGUI.add(coordTitle, BorderLayout.PAGE_START);
+		//optGUI.add(colorTitle, BorderLayout.PAGE_START);
 		optGUI.add(addBall, BorderLayout.PAGE_END);
 		
 		GUI.add(new JLabel(""), BorderLayout.PAGE_START);
