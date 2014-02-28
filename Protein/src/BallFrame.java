@@ -25,6 +25,7 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	private static int CANVAS_WIDTH = 720; // width of the drawable
 	private static int CANVAS_HEIGHT = 640; // height of the drawable
 	private static final int FPS = 60; // animator's target frames per second
+	private static float xLookAt, yLookAt = 0.0f;
 
 	public static GLCanvas createBallFrame() {
 		// Create the OpenGL rendering canvas
@@ -32,8 +33,22 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		canvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
 
 		final FPSAnimator animator = new FPSAnimator(canvas, FPS, true);
-
 		animator.start(); // start the animation loop
+
+		canvas.addMouseMotionListener(new MouseMotionListener() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				xLookAt = (float) (e.getPoint().getX() / 10.0f);
+				yLookAt = (float) (e.getPoint().getY() / 10.0f);
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		return canvas;
 	}
 
@@ -45,8 +60,6 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	final int slices = 16;
 	final int stacks = 16;
 	private static int balls = 0;
-	private static float angle = 0;
-	private static float angleSpeed = 0.1f;
 
 	/** Constructor to setup the GUI for this Component */
 	public BallFrame() {
@@ -56,12 +69,6 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		this.requestFocus();
 	}
 
-	// ------ Implement methods declared in GLEventListener ------
-
-	/**
-	 * Called back immediately after the OpenGL context is initialized. Can be
-	 * used to perform one-time initialization. Run only once.
-	 */
 	@Override
 	public void init(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2(); // get the OpenGL graphics context
@@ -101,16 +108,6 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		gl.glLoadIdentity(); // reset
 	}
 
-	/**
-	 * Called back by the animator to perform rendering.
-	 */
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.media.opengl.GLEventListener#display(javax.media.opengl.GLAutoDrawable
-	 * )
-	 */
 	@Override
 	public void display(GLAutoDrawable drawable) {
 
@@ -139,12 +136,6 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 
 		for (int i = 0; i < balls; i++) {
 			display(gl, i);
-		}
-
-		angle += angleSpeed;
-
-		if (Math.abs(angle) > 10f) {
-			angleSpeed = -angleSpeed;
 		}
 
 		// disable lightning
@@ -227,8 +218,8 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 
 		// Perspective.
 		float widthHeightRatio = (float) getWidth() / (float) getHeight();
-		glu.gluPerspective(45, widthHeightRatio, 1, 1000);
-		glu.gluLookAt(angle + distance, distance, distance, 0, 0, 0, 0, 1, 0);
+		glu.gluPerspective(30, widthHeightRatio, 1, 1000);
+		glu.gluLookAt(xLookAt, yLookAt, distance, 0, 0, 0, 0, 1, 0);
 
 		// Change back to model view matrix.
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
