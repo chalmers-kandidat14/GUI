@@ -15,9 +15,6 @@ import com.jogamp.opengl.util.FPSAnimator;
 import static javax.media.opengl.GL.*; // GL constants
 import static javax.media.opengl.GL2.*; // GL2 constants
 
-/**
- * JOGL 2.0 Example 2: Rotating 3D Shapes (GLCanvas)
- */
 @SuppressWarnings("serial")
 public class BallFrame extends GLCanvas implements GLEventListener, KeyListener {
 	// Define constants for the top-level container
@@ -26,6 +23,7 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	private static int CANVAS_HEIGHT = 640; // height of the drawable
 	private static final int FPS = 60; // animator's target frames per second
 	private static float xLookAt, yLookAt = 0.0f;
+	private static float zLookAt = 30.0f;
 
 	public static GLCanvas createBallFrame() {
 		// Create the OpenGL rendering canvas
@@ -36,10 +34,17 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		animator.start(); // start the animation loop
 
 		canvas.addMouseMotionListener(new MouseMotionListener() {
+			@SuppressWarnings("unused")
+			public void mouseClicked(MouseEvent e) {
+				xLookAt = e.getX() - xLookAt;
+				yLookAt = e.getY() - yLookAt;
+			}
+			
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				xLookAt = (float) (e.getPoint().getX() / 10.0f);
-				yLookAt = (float) (e.getPoint().getY() / 10.0f);
+				xLookAt = (float) ((e.getPoint().getX() - xLookAt) / 10.0f) - 30f;
+				yLookAt = (float) ((e.getPoint().getY() - xLookAt) / 10.0f) - 30f;
+				translater(xLookAt, yLookAt);
 			}
 
 			@Override
@@ -51,6 +56,14 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 
 		return canvas;
 	}
+	
+	final static float rad = 30f;
+	private static void translater(float x, float y) {
+		zLookAt = (float) Math.sqrt(Math.pow(rad, 2) - Math.pow(x, 2) - Math.pow(y, 2));
+		
+		System.out.println("X: " + x + ", Y: " + y + ", Z: " + zLookAt);
+	}
+	
 
 	// Setup OpenGL Graphics Renderer
 
@@ -219,7 +232,7 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		// Perspective.
 		float widthHeightRatio = (float) getWidth() / (float) getHeight();
 		glu.gluPerspective(30, widthHeightRatio, 1, 1000);
-		glu.gluLookAt(xLookAt, yLookAt, distance, 0, 0, 0, 0, 1, 0);
+		glu.gluLookAt(-xLookAt, yLookAt, zLookAt, 0, 0, 0, 0, 1, 0);
 
 		// Change back to model view matrix.
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
