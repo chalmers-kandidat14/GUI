@@ -73,6 +73,7 @@ public class ProteinGui {
 		try {
 			Scanner sc = new Scanner(new File(chainText));
 			BallChain chain = new BallChain();
+			Ball newBall;
 
 			while (sc.hasNextLine()) {
 				String ball = sc.nextLine();
@@ -89,9 +90,10 @@ public class ProteinGui {
 				float zCoord = Float.parseFloat(ballSplit[2]);
 				String type = ballSplit[3];
 
-				Ball newBall = new Ball(xCoord, yCoord, zCoord, type);
+				newBall = new Ball(xCoord, yCoord, zCoord, type);
 				chain.addBall(newBall);
 			}
+			Conformations.addConf(chain);
 			sc.close();
 		} catch (IOException e) {
 			System.err.println("could not read file, error: " + e);
