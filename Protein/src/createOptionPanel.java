@@ -21,8 +21,8 @@ public class createOptionPanel implements ActionListener {
 		JPanel optGUI = new JPanel();
 		JPanel GUI = new JPanel();
 
-		gridNextPrev.setLayout(new GridLayout(1, 2, 0, 5));
-		nextPrev.setLayout(new BorderLayout(0, 10));
+
+		nextPrev.setLayout(new GridLayout(1, 3, 0, 5));
 		optionPanel.setLayout(new GridLayout(4, 2, 0, 5));
 		optGUI.setLayout(new BorderLayout(0, 10));
 		GUI.setLayout(new BorderLayout());
@@ -48,6 +48,23 @@ public class createOptionPanel implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
 				if (BallFrame.getConf() > 0) {
 					BallFrame.decrConf();
+				}
+			}
+		});
+		
+		JButton moveStep = new JButton("Movie");
+		moveStep.setActionCommand("Movie");
+		moveStep.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+					BallFrame.zeroConf();
+				while (BallFrame.getConf() < Conformations.confSize() -1) {
+					try {
+					    Thread.sleep(5000);
+					} catch(InterruptedException ex) {
+					    Thread.currentThread().interrupt();
+					}
+					BallFrame.incrConf();
 				}
 			}
 		});
@@ -93,11 +110,14 @@ public class createOptionPanel implements ActionListener {
 		colTextField = new JTextField(1);
 		colTextField.setHorizontalAlignment(JTextField.RIGHT);
 
+
 		gridNextPrev.add(prevStep);
 		gridNextPrev.add(nextStep);
+		gridNextPrev.add(moveStep);
 		
 		nextPrev.add(new JLabel("Conformations"), BorderLayout.CENTER);
 		nextPrev.add(gridNextPrev, BorderLayout.PAGE_END);
+
 
 		optionPanel.add(xCoord);
 		optionPanel.add(xTextField);
