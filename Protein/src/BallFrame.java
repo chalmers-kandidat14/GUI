@@ -244,6 +244,10 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	public static void decrConf() {
 		currConf--;
 	}
+	
+	public static void zeroConf() {
+		currConf = 0;
+	}
 
 	/**
 	 * ; Called back before the OpenGL context is destroyed. Release resource

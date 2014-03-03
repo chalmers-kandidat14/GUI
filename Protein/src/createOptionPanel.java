@@ -19,7 +19,7 @@ public class createOptionPanel implements ActionListener {
 		JPanel optGUI = new JPanel();
 		JPanel GUI = new JPanel();
 
-		nextPrev.setLayout(new GridLayout(1, 2, 0, 5));
+		nextPrev.setLayout(new GridLayout(1, 3, 0, 5));
 		optionPanel.setLayout(new GridLayout(4, 2, 0, 5));
 		optGUI.setLayout(new BorderLayout(0, 10));
 
@@ -44,6 +44,23 @@ public class createOptionPanel implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
 				if (BallFrame.getConf() > 0) {
 					BallFrame.decrConf();
+				}
+			}
+		});
+		
+		JButton moveStep = new JButton("Movie");
+		moveStep.setActionCommand("Movie");
+		moveStep.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+					BallFrame.zeroConf();
+				while (BallFrame.getConf() < Conformations.confSize() -1) {
+					try {
+					    Thread.sleep(5000);
+					} catch(InterruptedException ex) {
+					    Thread.currentThread().interrupt();
+					}
+					BallFrame.incrConf();
 				}
 			}
 		});
@@ -94,6 +111,7 @@ public class createOptionPanel implements ActionListener {
 
 		nextPrev.add(prevStep);
 		nextPrev.add(nextStep);
+		nextPrev.add(moveStep);
 
 		optionPanel.add(xCoord);
 		optionPanel.add(xTextField);
