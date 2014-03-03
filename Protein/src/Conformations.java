@@ -15,4 +15,8 @@ public class Conformations {
 	public static BallChain retConf(int i) {
 		return conformation.get(i);
 	}
+	
+	public static int confSize() {
+		return conformation.size();
+	}
 }
