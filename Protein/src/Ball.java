@@ -15,13 +15,22 @@ public class Ball {
 	public float getX(){
 		return xpos;
 	}
-	public float gety(){
+	public float getY(){
 		return ypos;
 	}
-	public float getz(){
+	public float getZ(){
 		return zpos;
 	}
 	public String getc(){
 		return col;
+	}
+	public void setX(float x){
+		xpos = x;
+	}
+	public void setY(float y){
+		ypos = y;
+	}
+	public void setZ(float z){
+		zpos =  z;
 	}
 }

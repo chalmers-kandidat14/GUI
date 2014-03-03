@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Iterator;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
@@ -24,7 +25,6 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	private static final int FPS = 60; // animator's target frames per second
 	private static float xLookAt, yLookAt = 0.0f;
 	private static float zLookAt = 30.0f;
-
 	public static GLCanvas createBallFrame() {
 		// Create the OpenGL rendering canvas
 		GLCanvas canvas = new BallFrame();
@@ -39,7 +39,7 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 				xLookAt = e.getX() - xLookAt;
 				yLookAt = e.getY() - yLookAt;
 			}
-			
+
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				xLookAt = (float) ((e.getPoint().getX() - xLookAt) / 10.0f) - 30f;
@@ -53,18 +53,18 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 
 			}
 		});
-
+		
 		return canvas;
 	}
-	
+
 	final static float rad = 30f;
+
 	private static void translater(float x, float y) {
-		zLookAt = (float) Math.sqrt(Math.pow(rad, 2) - Math.pow(x, 2) - Math.pow(y, 2));
+		zLookAt = (float) Math.sqrt(Math.pow(rad, 2) - Math.pow(x, 2)
+				- Math.pow(y, 2));
 	}
-	
 
 	// Setup OpenGL Graphics Renderer
-
 	private GLU glu; // for the GL Utility
 	private static float dist = 10f;
 	final float radius = 0.33f;
@@ -121,7 +121,6 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 
 	@Override
 	public void display(GLAutoDrawable drawable) {
-
 		GL2 gl = drawable.getGL().getGL2(); // get the OpenGL 2 graphics context
 		gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		// Set camera.
@@ -141,12 +140,8 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		// Enable lighting in GL.
 		gl.glEnable(GL2.GL_LIGHT1);
 		gl.glEnable(GL2.GL_LIGHTING);
-	
-
-		for (int i = 0; i < balls; i++) {
-			display(gl, i);
-		}
-		//for(Ball : ProteinGui.listOfBalls)
+		
+		display(gl);
 
 		// disable lightning
 		gl.glDisable(GL2.GL_LIGHT1);
@@ -155,14 +150,6 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		for (int i = 0; i < balls; i++) {
 			drawLines(gl, i);
 		}
-	}
-	
-	public static void incI() {
-		balls++;
-	}
-	
-	public static int retI() {
-		return balls;
 	}
 
 	private void drawLines(GL2 gl, int i) {
@@ -184,42 +171,44 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		}
 	}
 
-	private void display(GL2 gl, int i) {
+	private void display(GL2 gl) {
 		gl.glLoadIdentity();
-		float currX = CreateBall.getX(i);
-		float currY = CreateBall.getY(i);
-		float currZ = CreateBall.getZ(i);
-		String colorB = CreateBall.getC(i);
-		gl.glTranslatef(currX, currY, currZ);
+		Iterator<Ball> it = BallChain.bollList.iterator();
+		float currX, currY, currZ;
+		String colorB;
 		
-		if(colorB.equals("P")){
-
-			float[] rgba = { 0.8f, 0.1f, 0.0f };
-			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, rgba, 0);
-			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, rgba, 0);
-			gl.glMaterialf(GL.GL_FRONT, GL2.GL_SHININESS, 0.5f);
-		}
-		else if(colorB.equals("H")){
-			float[] rgba = { 0.0f, 0.2f, 1.0f };
-			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, rgba, 0);
-			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, rgba, 0);
-			gl.glMaterialf(GL.GL_FRONT, GL2.GL_SHININESS, 0.5f);
-		}
-		else{
-			float[] rgba = { 1.0f, 1.0f, 1.0f };
-			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, rgba, 0);
-			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, rgba, 0);
-			gl.glMaterialf(GL.GL_FRONT, GL2.GL_SHININESS, 0.5f);
+		while (it.hasNext()) {
+			Ball nextBall = it.next();
+			currX = nextBall.getX();
+			currY = nextBall.getY();
+			currZ = nextBall.getZ();
+			colorB = nextBall.getc();
 			
+			gl.glTranslatef(currX, currY, currZ);
+			if (colorB.equals("P")) {
+				float[] rgba = { 0.8f, 0.1f, 0.0f };
+				gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, rgba, 0);
+				gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, rgba, 0);
+				gl.glMaterialf(GL.GL_FRONT, GL2.GL_SHININESS, 0.5f);
+			} else if (colorB.equals("H")) {
+				float[] rgba = { 0.0f, 0.2f, 1.0f };
+				gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, rgba, 0);
+				gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, rgba, 0);
+				gl.glMaterialf(GL.GL_FRONT, GL2.GL_SHININESS, 0.5f);
+			} else {
+				float[] rgba = { 1.0f, 1.0f, 1.0f };
+				gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, rgba, 0);
+				gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, rgba, 0);
+				gl.glMaterialf(GL.GL_FRONT, GL2.GL_SHININESS, 0.5f);
+
+			}
+
+			GLUquadric sphere = glu.gluNewQuadric();
+			glu.gluQuadricDrawStyle(sphere, GLU.GLU_FILL);
+			glu.gluQuadricNormals(sphere, GLU.GLU_FLAT);
+			glu.gluQuadricOrientation(sphere, GLU.GLU_OUTSIDE);
+			glu.gluSphere(sphere, radius, slices, stacks);
 		}
-		
-
-		GLUquadric sphere = glu.gluNewQuadric();
-		glu.gluQuadricDrawStyle(sphere, GLU.GLU_FILL);
-		glu.gluQuadricNormals(sphere, GLU.GLU_FLAT);
-		glu.gluQuadricOrientation(sphere, GLU.GLU_OUTSIDE);
-		glu.gluSphere(sphere, radius, slices, stacks);
-
 	}
 
 	public static void incrBall() {

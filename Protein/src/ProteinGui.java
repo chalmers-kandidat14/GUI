@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class ProteinGui {
-	private static int i = 0;
 	private static String TITLE = "Protein";
 	static JFrame guiFrame;
 	static Container contentPane;
@@ -32,12 +31,6 @@ public class ProteinGui {
 		ProteinGui pg = new ProteinGui();
 		pg.drawGui();
 		pg.readChainText(inputFile);
-		
-			
-	
-
-		
-
 	}
 	
 	private void drawGui(){
@@ -80,7 +73,6 @@ public class ProteinGui {
 	 * @param chainText
 	 */
 	private void readChainText(String chainText){
-		List<Ball> listOfBalls = new ArrayList<Ball>();
 		try{
 			Scanner sc = new Scanner(new File(chainText));
 			while (sc.hasNextLine()) {
@@ -91,10 +83,8 @@ public class ProteinGui {
 				float zCoord = Float.parseFloat(ballSplit[2]);
 				String type = ballSplit[3];
 				
-				CreateBall.addBall(BallFrame.retI(), xCoord, yCoord, zCoord, type);
-				Ball boll = new Ball(xCoord, yCoord, zCoord, type);
-				listOfBalls.add(boll);
-				BallFrame.incI();
+				Ball newBall = new Ball(xCoord, yCoord, zCoord, type);
+				BallChain.addBall(newBall);
 			}
 		}catch(IOException e){
 			System.err.println("could not read file, error: " + e);
