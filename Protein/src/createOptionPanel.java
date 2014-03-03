@@ -32,8 +32,7 @@ public class createOptionPanel implements ActionListener {
 		nextStep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				//Lägg till nästa konformation
-				//lägg till en funktion "moveBall"
+				BallFrame.incrConf();
 			}
 		});
 		
@@ -42,8 +41,7 @@ public class createOptionPanel implements ActionListener {
 		prevStep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				//Lägg till föregående konformation
-				//lägg till en funktion "moveBall"
+				BallFrame.decrConf();
 			}
 		});
 				
@@ -62,7 +60,8 @@ public class createOptionPanel implements ActionListener {
 				String MolColor = colTextField.getText();
 				
 				Ball newBall = new Ball(xCoordinate, yCoordinate, zCoordinate, MolColor);
-				BallChain.addBall(newBall);
+				BallChain currentChain = Conformations.retConf(BallFrame.getConf());
+				currentChain.addBall(newBall);
 			}
 		});
 

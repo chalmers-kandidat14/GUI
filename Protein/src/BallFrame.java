@@ -25,6 +25,7 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	private static final int FPS = 60; // animator's target frames per second
 	private static float xLookAt, yLookAt = 0.0f;
 	private static float zLookAt = 30.0f;
+	private static int currConf = 0;
 
 	public static GLCanvas createBallFrame() {
 		// Create the OpenGL rendering canvas
@@ -151,7 +152,8 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	}
 
 	private void drawLines(GL2 gl) {
-		Iterator<Ball> it = BallChain.bollList.iterator();
+		BallChain current = Conformations.retConf(currConf);
+		Iterator<Ball> it = current.bollList.iterator();
 		Ball prevBall = it.next();
 		Ball nextBall;
 
@@ -177,8 +179,8 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	}
 
 	private void display(GL2 gl) {
-		gl.glLoadIdentity();
-		Iterator<Ball> it = BallChain.bollList.iterator();
+		BallChain current = Conformations.retConf(currConf);
+		Iterator<Ball> it = current.bollList.iterator();
 		float currX, currY, currZ;
 		String colorB;
 
@@ -230,6 +232,17 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		// Change back to model view matrix.
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
+	}
+	
+	public static int getConf() {
+		return currConf;
+	}
+	
+	public static void incrConf() {
+		currConf++;
+	}
+	public static void decrConf() {
+		currConf--;
 	}
 
 	/**
