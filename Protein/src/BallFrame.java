@@ -146,6 +146,7 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		for (int i = 0; i < balls; i++) {
 			display(gl, i);
 		}
+		//for(Ball : ProteinGui.listOfBalls)
 
 		// disable lightning
 		gl.glDisable(GL2.GL_LIGHT1);
