@@ -188,8 +188,8 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 			currY = nextBall.getY();
 			currZ = nextBall.getZ();
 			colorB = nextBall.getc();
-			System.out.println("X: " + currX + ", Y: " + currY + ", Z: " + currZ);
-
+			
+			gl.glLoadIdentity();
 			gl.glTranslatef(currX, currY, currZ);
 			if (colorB.equals("P")) {
 				float[] rgba = { 0.8f, 0.1f, 0.0f };
