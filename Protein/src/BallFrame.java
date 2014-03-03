@@ -25,6 +25,7 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	private static final int FPS = 60; // animator's target frames per second
 	private static float xLookAt, yLookAt = 0.0f;
 	private static float zLookAt = 30.0f;
+
 	public static GLCanvas createBallFrame() {
 		// Create the OpenGL rendering canvas
 		GLCanvas canvas = new BallFrame();
@@ -53,7 +54,7 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 
 			}
 		});
-		
+
 		return canvas;
 	}
 
@@ -70,7 +71,6 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	final float radius = 0.33f;
 	final int slices = 16;
 	final int stacks = 16;
-	private static int balls = 0;
 
 	/** Constructor to setup the GUI for this Component */
 	public BallFrame() {
@@ -140,26 +140,29 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		// Enable lighting in GL.
 		gl.glEnable(GL2.GL_LIGHT1);
 		gl.glEnable(GL2.GL_LIGHTING);
-		
+
 		display(gl);
 
 		// disable lightning
 		gl.glDisable(GL2.GL_LIGHT1);
 		gl.glDisable(GL2.GL_LIGHTING);
 
-		for (int i = 0; i < balls; i++) {
-			drawLines(gl, i);
-		}
+		drawLines(gl);
 	}
 
-	private void drawLines(GL2 gl, int i) {
-		if (i > 0) {
-			float currX = CreateBall.getX(i);
-			float currY = CreateBall.getY(i);
-			float currZ = CreateBall.getZ(i);
-			float prevX = CreateBall.getX(i - 1);
-			float prevY = CreateBall.getY(i - 1);
-			float prevZ = CreateBall.getZ(i - 1);
+	private void drawLines(GL2 gl) {
+		Iterator<Ball> it = BallChain.bollList.iterator();
+		Ball prevBall = it.next();
+		Ball nextBall;
+
+		while (it.hasNext()) {
+			nextBall = it.next();
+			float currX = nextBall.getX();
+			float currY = nextBall.getY();
+			float currZ = nextBall.getZ();
+			float prevX = prevBall.getX();
+			float prevY = prevBall.getY();
+			float prevZ = prevBall.getZ();
 
 			gl.glLoadIdentity();
 			gl.glLineWidth(3f);
@@ -168,6 +171,8 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 			gl.glVertex3f(currX, currY, currZ);
 			gl.glVertex3f(prevX, prevY, prevZ);
 			gl.glEnd();
+			
+			prevBall = nextBall;
 		}
 	}
 
@@ -176,14 +181,15 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		Iterator<Ball> it = BallChain.bollList.iterator();
 		float currX, currY, currZ;
 		String colorB;
-		
+
 		while (it.hasNext()) {
 			Ball nextBall = it.next();
 			currX = nextBall.getX();
 			currY = nextBall.getY();
 			currZ = nextBall.getZ();
 			colorB = nextBall.getc();
-			
+			System.out.println("X: " + currX + ", Y: " + currY + ", Z: " + currZ);
+
 			gl.glTranslatef(currX, currY, currZ);
 			if (colorB.equals("P")) {
 				float[] rgba = { 0.8f, 0.1f, 0.0f };
@@ -209,14 +215,6 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 			glu.gluQuadricOrientation(sphere, GLU.GLU_OUTSIDE);
 			glu.gluSphere(sphere, radius, slices, stacks);
 		}
-	}
-
-	public static void incrBall() {
-		balls++;
-	}
-
-	public static int getBalls() {
-		return balls;
 	}
 
 	private void setCamera(GL2 gl, GLU glu, float distance) {
