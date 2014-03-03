@@ -192,11 +192,11 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		gl.glTranslatef(currX, currY, currZ);
 		
 		if(colorB.equals("P")){
+
 			float[] rgba = { 0.8f, 0.1f, 0.0f };
 			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, rgba, 0);
 			gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, rgba, 0);
 			gl.glMaterialf(GL.GL_FRONT, GL2.GL_SHININESS, 0.5f);
-			
 		}
 		else if(colorB.equals("H")){
 			float[] rgba = { 0.0f, 0.2f, 1.0f };

@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class Main {
-	private static int i = 0;
 	private static String TITLE = "Protein";
 	static JFrame guiFrame;
 	static Container contentPane;
@@ -64,5 +63,6 @@ public class Main {
 			CreateBall.addBall(BallFrame.retI(), xCoord, yCoord, zCoord, type);
 			BallFrame.incI();
 		}
+		sc.close();
 	}
 }
