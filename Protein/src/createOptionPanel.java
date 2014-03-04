@@ -22,6 +22,11 @@ public class createOptionPanel implements ActionListener {
 		JPanel optGUI = new JPanel();
 		JPanel GUI = new JPanel();
 
+
+		gridNextPrev.setLayout(new GridLayout(1, 3, 0, 5));
+		nextPrev.setLayout(new BorderLayout(0,10));
+		confLabel.setLayout(new BorderLayout(0,10));
+
 		gridNextPrev.setLayout(new GridLayout(1, 3, 0, 5));
 		nextPrev.setLayout(new BorderLayout(0,10));
 		confLabel.setLayout(new BorderLayout(0,10));
@@ -30,8 +35,8 @@ public class createOptionPanel implements ActionListener {
 
 		GUI.setLayout(new BorderLayout());
 
-
 		nextPrev.setPreferredSize(new Dimension(200, 300));
+
 		GUI.setSize(WIDTH, HEIGHT);
 
 		JButton nextStep = new JButton("Next");
@@ -141,7 +146,7 @@ public class createOptionPanel implements ActionListener {
 		nextPrev.add(prevStep);
 		nextPrev.add(nextStep);
 		nextPrev.add(moveStep);
-		
+
 		gridNextPrev.add(prevStep);
 		gridNextPrev.add(nextStep);
 		gridNextPrev.add(moveStep);
