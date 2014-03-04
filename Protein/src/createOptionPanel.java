@@ -54,12 +54,17 @@ public class createOptionPanel implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 					Thread t = new Thread(new Runnable(){
+						public boolean run = true;
 					    @Override
 					    public void run(){
-					        while(!Thread.currentThread().isInterrupted()){
+					    	run = true;
+					        while(run){
 					        	if (BallFrame.getConf() < Conformations.confSize() - 1) {
 									BallFrame.incrConf();
 								}
+					        	else{
+					        		run = false;
+					        	}
 
 					            try{
 					                Thread.sleep(4000);
