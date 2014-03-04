@@ -149,6 +149,7 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		gl.glDisable(GL2.GL_LIGHTING);
 
 		drawLines(gl);
+		new Grid(gl);
 	}
 
 	private void drawLines(GL2 gl) {
