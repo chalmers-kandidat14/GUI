@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,19 +14,16 @@ public class createOptionPanel implements ActionListener {
 	private static int HEIGHT = 300;
 
 	public static JPanel createOpt() {
-		JPanel gridNextPrev = new JPanel();
 		JPanel nextPrev = new JPanel();
 		JPanel optionPanel = new JPanel();
 		JPanel optGUI = new JPanel();
 		JPanel GUI = new JPanel();
 
-
 		nextPrev.setLayout(new GridLayout(1, 3, 0, 5));
 		optionPanel.setLayout(new GridLayout(4, 2, 0, 5));
 		optGUI.setLayout(new BorderLayout(0, 10));
+
 		GUI.setLayout(new BorderLayout());
-		
-		nextPrev.setPreferredSize(new Dimension(200,100));
 		GUI.setSize(WIDTH, HEIGHT);
 
 		JButton nextStep = new JButton("Next");
@@ -63,6 +59,14 @@ public class createOptionPanel implements ActionListener {
 					    public void run(){
 					    	run = true;
 					        while(run){
+					        	if(BallFrame.getConf() == 0){
+					        		try{
+					        		Thread.sleep(4000);
+					        		}catch(InterruptedException e){
+					        			Thread.currentThread().interrupt();
+					        		}
+					        	}
+					        	
 					        	if (BallFrame.getConf() < Conformations.confSize() - 1) {
 									BallFrame.incrConf();
 								}
@@ -92,6 +96,9 @@ public class createOptionPanel implements ActionListener {
 		addBall.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
+				// When the "Change Layout" button is clicked
+				// the GridLayout of the buttonPanel is changed
+				// based on the grid size and spacing values chosen
 				float xCoordinate = Float.parseFloat(xTextField.getText());
 				float yCoordinate = Float.parseFloat(yTextField.getText());
 				float zCoordinate = Float.parseFloat(zTextField.getText());
@@ -128,14 +135,9 @@ public class createOptionPanel implements ActionListener {
 		colTextField = new JTextField(1);
 		colTextField.setHorizontalAlignment(JTextField.RIGHT);
 
-
-		gridNextPrev.add(prevStep);
-		gridNextPrev.add(nextStep);
-		gridNextPrev.add(moveStep);
-		
-		nextPrev.add(new JLabel("Conformations"), BorderLayout.CENTER);
-		nextPrev.add(gridNextPrev, BorderLayout.PAGE_END);
-
+		nextPrev.add(prevStep);
+		nextPrev.add(nextStep);
+		nextPrev.add(moveStep);
 
 		optionPanel.add(xCoord);
 		optionPanel.add(xTextField);
