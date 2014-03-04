@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,15 +16,22 @@ public class createOptionPanel implements ActionListener {
 
 	public static JPanel createOpt() {
 		JPanel nextPrev = new JPanel();
+		JPanel gridNextPrev = new JPanel();
+		JPanel confLabel = new JPanel();
 		JPanel optionPanel = new JPanel();
 		JPanel optGUI = new JPanel();
 		JPanel GUI = new JPanel();
 
-		nextPrev.setLayout(new GridLayout(1, 3, 0, 5));
+		gridNextPrev.setLayout(new GridLayout(1, 3, 0, 5));
+		nextPrev.setLayout(new BorderLayout(0,10));
+		confLabel.setLayout(new BorderLayout(0,10));
 		optionPanel.setLayout(new GridLayout(4, 2, 0, 5));
 		optGUI.setLayout(new BorderLayout(0, 10));
 
 		GUI.setLayout(new BorderLayout());
+
+
+		nextPrev.setPreferredSize(new Dimension(200, 300));
 		GUI.setSize(WIDTH, HEIGHT);
 
 		JButton nextStep = new JButton("Next");
@@ -47,7 +55,7 @@ public class createOptionPanel implements ActionListener {
 				}
 			}
 		});
-		
+
 		JButton moveStep = new JButton("Movie");
 		moveStep.setActionCommand("Movie");
 		moveStep.addActionListener(new ActionListener() {
@@ -83,13 +91,8 @@ public class createOptionPanel implements ActionListener {
 					    }
 					});
 					t.start();
-				
 			}
 		});
-		
-		
-		
-		
 
 		JButton addBall = new JButton("Add");
 		addBall.setActionCommand("Add");
@@ -138,6 +141,14 @@ public class createOptionPanel implements ActionListener {
 		nextPrev.add(prevStep);
 		nextPrev.add(nextStep);
 		nextPrev.add(moveStep);
+		
+		gridNextPrev.add(prevStep);
+		gridNextPrev.add(nextStep);
+		gridNextPrev.add(moveStep);
+
+		confLabel.add(new JLabel("Conformations"), BorderLayout.PAGE_END);
+		nextPrev.add(confLabel, BorderLayout.CENTER);
+		nextPrev.add(gridNextPrev, BorderLayout.PAGE_END);
 
 		optionPanel.add(xCoord);
 		optionPanel.add(xTextField);

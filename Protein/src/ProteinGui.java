@@ -15,7 +15,7 @@ public class ProteinGui {
 	static JFrame guiFrame;
 	static Container contentPane;
 
-	private static int WIDTH = 1240;
+	private static int WIDTH = 1280;
 	private static int HEIGHT = 640;
 
 	// List of ball chains containing balls
