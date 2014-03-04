@@ -22,11 +22,12 @@ public class ProteinGui {
 	// private static List<listOfBalls> chainList = new
 	// ArrayList<listOfBalls>();
 	private static String inputFile = "src/Exempel2.txt";
+	private static String inputFile3 = "src/Exempel3.txt";
 
 	public static void main(String[] args) {
 		ProteinGui pg = new ProteinGui();
 		pg.drawGui();
-		pg.readChainText(inputFile);
+		pg.readChainText(inputFile3);
 	}
 
 	private void drawGui() {

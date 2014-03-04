@@ -57,17 +57,30 @@ public class createOptionPanel implements ActionListener {
 		moveStep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-					BallFrame.zeroConf();
-				while (BallFrame.getConf() < Conformations.confSize() -1) {
-					try {
-					    Thread.sleep(5000);
-					} catch(InterruptedException ex) {
-					    Thread.currentThread().interrupt();
-					}
-					BallFrame.incrConf();
-				}
+					Thread t = new Thread(new Runnable(){
+					    @Override
+					    public void run(){
+					        while(!Thread.currentThread().isInterrupted()){
+					        	if (BallFrame.getConf() < Conformations.confSize() - 1) {
+									BallFrame.incrConf();
+								}
+
+					            try{
+					                Thread.sleep(4000);
+					            }catch(InterruptedException e){
+					                Thread.currentThread().interrupt();
+					            }
+					        }
+					    }
+					});
+					t.start();
+				
 			}
 		});
+		
+		
+		
+		
 
 		JButton addBall = new JButton("Add");
 		addBall.setActionCommand("Add");
