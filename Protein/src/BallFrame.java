@@ -142,7 +142,8 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		gl.glEnable(GL2.GL_LIGHT1);
 		gl.glEnable(GL2.GL_LIGHTING);
 
-		display(gl);
+		//display(gl);
+		new displayBall(gl, currConf, glu, radius, slices, stacks);
 
 		// disable lightning
 		gl.glDisable(GL2.GL_LIGHT1);
@@ -152,74 +153,6 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		new Grid(gl);
 		drawLines dl = new drawLines(gl, currConf);
 		dl.doDrawLines();
-	}
-
-//	private void drawLines(GL2 gl) {
-//		BallChain current = Conformations.retConf(currConf);
-//		Iterator<Ball> it = current.bollList.iterator();
-//		Ball prevBall = it.next();
-//		Ball nextBall;
-//
-//		while (it.hasNext()) {
-//			nextBall = it.next();
-//			float currX = nextBall.getX();
-//			float currY = nextBall.getY();
-//			float currZ = nextBall.getZ();
-//			float prevX = prevBall.getX();
-//			float prevY = prevBall.getY();
-//			float prevZ = prevBall.getZ();
-//
-//			gl.glLoadIdentity();
-//			gl.glLineWidth(3f);
-//			gl.glBegin(GL_LINES);
-//			gl.glColor3f(0.0f, 1.0f, 0.0f); // Green
-//			gl.glVertex3f(currX, currY, currZ);
-//			gl.glVertex3f(prevX, prevY, prevZ);
-//			gl.glEnd();
-//			
-//			prevBall = nextBall;
-//		}
-//	}
-
-	private void display(GL2 gl) {
-		BallChain current = Conformations.retConf(currConf);
-		Iterator<Ball> it = current.bollList.iterator();
-		float currX, currY, currZ;
-		String colorB;
-
-		while (it.hasNext()) {
-			Ball nextBall = it.next();
-			currX = nextBall.getX();
-			currY = nextBall.getY();
-			currZ = nextBall.getZ();
-			colorB = nextBall.getc();
-			
-			gl.glLoadIdentity();
-			gl.glTranslatef(currX, currY, currZ);
-			if (colorB.equals("P")) {
-				float[] rgba = { 0.8f, 0.1f, 0.0f };
-				gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, rgba, 0);
-				gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, rgba, 0);
-				gl.glMaterialf(GL.GL_FRONT, GL2.GL_SHININESS, 0.5f);
-			} else if (colorB.equals("H")) {
-				float[] rgba = { 0.0f, 0.2f, 1.0f };
-				gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, rgba, 0);
-				gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, rgba, 0);
-				gl.glMaterialf(GL.GL_FRONT, GL2.GL_SHININESS, 0.5f);
-			} else {
-				float[] rgba = { 1.0f, 1.0f, 1.0f };
-				gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, rgba, 0);
-				gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, rgba, 0);
-				gl.glMaterialf(GL.GL_FRONT, GL2.GL_SHININESS, 0.5f);
-
-			}
-
-			GLUquadric sphere = glu.gluNewQuadric();
-			glu.gluQuadricDrawStyle(sphere, GLU.GLU_FILL);
-			glu.gluQuadricNormals(sphere, GLU.GLU_FLAT);
-			glu.gluQuadricOrientation(sphere, GLU.GLU_OUTSIDE);
-			glu.gluSphere(sphere, radius, slices, stacks);
-		}
 	}
 
 	private void setCamera(GL2 gl, GLU glu, float distance) {

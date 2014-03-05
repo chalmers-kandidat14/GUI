@@ -3,6 +3,12 @@ import static javax.media.opengl.GL.GL_LINES;
 import java.util.Iterator;
 import javax.media.opengl.GL2;
 
+/**
+ * Draws the lines for the molecules
+ * 
+ * @author kandidatgrupp
+ *
+ */
 
 
 public class drawLines {
