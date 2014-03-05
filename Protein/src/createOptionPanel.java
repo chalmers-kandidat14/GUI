@@ -15,30 +15,32 @@ public class createOptionPanel implements ActionListener {
 	private static int HEIGHT = 300;
 
 	public static JPanel createOpt() {
-		JPanel nextPrev = new JPanel();
+		JPanel NPInput = new JPanel();
+		JPanel gridNPI = new JPanel();
 		JPanel gridNextPrev = new JPanel();
-		JPanel confLabel = new JPanel();
 		JPanel optionPanel = new JPanel();
 		JPanel optGUI = new JPanel();
 		JPanel GUI = new JPanel();
 
-
 		gridNextPrev.setLayout(new GridLayout(1, 3, 0, 5));
-		nextPrev.setLayout(new BorderLayout(0,10));
-		confLabel.setLayout(new BorderLayout(0,10));
-
-		gridNextPrev.setLayout(new GridLayout(1, 3, 0, 5));
-		nextPrev.setLayout(new BorderLayout(0,10));
-		confLabel.setLayout(new BorderLayout(0,10));
+		gridNPI.setLayout(new GridLayout(4, 1, 10, 5));
+		NPInput.setLayout(new BorderLayout(0, 5));
 		optionPanel.setLayout(new GridLayout(4, 2, 0, 5));
 		optGUI.setLayout(new BorderLayout(0, 10));
-
-		GUI.setLayout(new BorderLayout());
-
-		nextPrev.setPreferredSize(new Dimension(200, 300));
-
+		GUI.setLayout(new BorderLayout(5, 10));
+		
+		NPInput.setPreferredSize(new Dimension(200, 300));
 		GUI.setSize(WIDTH, HEIGHT);
 
+		JButton inpStream = new JButton("Start inputstream");
+		inpStream.setActionCommand("Start inputstream");
+		inpStream.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				//set a boolean to true/false
+			}
+		});
+		
 		JButton nextStep = new JButton("Next");
 		nextStep.setActionCommand("Next");
 		nextStep.addActionListener(new ActionListener() {
@@ -143,17 +145,16 @@ public class createOptionPanel implements ActionListener {
 		colTextField = new JTextField(1);
 		colTextField.setHorizontalAlignment(JTextField.RIGHT);
 
-		nextPrev.add(prevStep);
-		nextPrev.add(nextStep);
-		nextPrev.add(moveStep);
-
 		gridNextPrev.add(prevStep);
 		gridNextPrev.add(nextStep);
 		gridNextPrev.add(moveStep);
+		
+		gridNPI.add(new JLabel("Start inputstream"));
+		gridNPI.add(inpStream);
+		gridNPI.add(new JLabel("Conformations"));
+		gridNPI.add(gridNextPrev);
 
-		confLabel.add(new JLabel("Conformations"), BorderLayout.PAGE_END);
-		nextPrev.add(confLabel, BorderLayout.CENTER);
-		nextPrev.add(gridNextPrev, BorderLayout.PAGE_END);
+		NPInput.add(gridNPI, BorderLayout.PAGE_END);
 
 		optionPanel.add(xCoord);
 		optionPanel.add(xTextField);
@@ -166,11 +167,10 @@ public class createOptionPanel implements ActionListener {
 
 		optGUI.add(optionPanel, BorderLayout.CENTER);
 		optGUI.add(coordTitle, BorderLayout.PAGE_START);
-		// optGUI.add(colorTitle, BorderLayout.PAGE_START);
 		optGUI.add(addBall, BorderLayout.PAGE_END);
 
 		GUI.add(new JLabel(""), BorderLayout.PAGE_START);
-		GUI.add(nextPrev, BorderLayout.CENTER);
+		GUI.add(NPInput, BorderLayout.CENTER);
 		GUI.add(optGUI, BorderLayout.PAGE_END);
 
 		return GUI;
