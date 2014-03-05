@@ -148,36 +148,38 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		gl.glDisable(GL2.GL_LIGHT1);
 		gl.glDisable(GL2.GL_LIGHTING);
 
-		drawLines(gl);
+		//drawLines(gl);
 		new Grid(gl);
+		drawLines dl = new drawLines(gl, currConf);
+		dl.doDrawLines();
 	}
 
-	private void drawLines(GL2 gl) {
-		BallChain current = Conformations.retConf(currConf);
-		Iterator<Ball> it = current.bollList.iterator();
-		Ball prevBall = it.next();
-		Ball nextBall;
-
-		while (it.hasNext()) {
-			nextBall = it.next();
-			float currX = nextBall.getX();
-			float currY = nextBall.getY();
-			float currZ = nextBall.getZ();
-			float prevX = prevBall.getX();
-			float prevY = prevBall.getY();
-			float prevZ = prevBall.getZ();
-
-			gl.glLoadIdentity();
-			gl.glLineWidth(3f);
-			gl.glBegin(GL_LINES);
-			gl.glColor3f(0.0f, 1.0f, 0.0f); // Green
-			gl.glVertex3f(currX, currY, currZ);
-			gl.glVertex3f(prevX, prevY, prevZ);
-			gl.glEnd();
-			
-			prevBall = nextBall;
-		}
-	}
+//	private void drawLines(GL2 gl) {
+//		BallChain current = Conformations.retConf(currConf);
+//		Iterator<Ball> it = current.bollList.iterator();
+//		Ball prevBall = it.next();
+//		Ball nextBall;
+//
+//		while (it.hasNext()) {
+//			nextBall = it.next();
+//			float currX = nextBall.getX();
+//			float currY = nextBall.getY();
+//			float currZ = nextBall.getZ();
+//			float prevX = prevBall.getX();
+//			float prevY = prevBall.getY();
+//			float prevZ = prevBall.getZ();
+//
+//			gl.glLoadIdentity();
+//			gl.glLineWidth(3f);
+//			gl.glBegin(GL_LINES);
+//			gl.glColor3f(0.0f, 1.0f, 0.0f); // Green
+//			gl.glVertex3f(currX, currY, currZ);
+//			gl.glVertex3f(prevX, prevY, prevZ);
+//			gl.glEnd();
+//			
+//			prevBall = nextBall;
+//		}
+//	}
 
 	private void display(GL2 gl) {
 		BallChain current = Conformations.retConf(currConf);
