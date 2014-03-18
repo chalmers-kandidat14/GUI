@@ -5,7 +5,7 @@ import javax.media.opengl.GL2;
 /**
  * Class for printing the grid.
  * should fix it
- * @author gao
+ * @author kandidatgrupp
  *
  */
 

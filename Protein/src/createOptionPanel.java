@@ -1,7 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -38,7 +37,13 @@ public class createOptionPanel implements ActionListener {
 		inpStream.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				//set a boolean to true/false
+				ExAlg alg = new ExAlg();
+				alg.runAlg();
+				//new readChain("src/out.txt");
+				new readChain(alg.getAlgRes());
+				
+				
+				System.out.println("HEJSaN!!");
 			}
 		});
 		
@@ -55,7 +60,6 @@ public class createOptionPanel implements ActionListener {
 
 		JButton prevStep = new JButton("Previous");
 		prevStep.setActionCommand("Previous");
-		prevStep.setMargin(new Insets(0, 0, 0, 0));
 		prevStep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
@@ -67,7 +71,6 @@ public class createOptionPanel implements ActionListener {
 
 		JButton moveStep = new JButton("Movie");
 		moveStep.setActionCommand("Movie");
-		moveStep.setMargin(new Insets(0, 0, 0, 0));
 		moveStep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {

@@ -23,9 +23,11 @@ public class ProteinGui {
 	// ArrayList<listOfBalls>();
 	private static String inputFile = "src/Exempel2.txt";
 	private static String inputFile3 = "src/Exempel3.txt";
+	//private static String outputAlg = "src/out.txt;
 
 	public static void main(String[] args) {
 		ProteinGui pg = new ProteinGui();
+		//readChain rc = new readChain();
 		pg.drawGui();
 		pg.readChainText(inputFile3);
 	}
