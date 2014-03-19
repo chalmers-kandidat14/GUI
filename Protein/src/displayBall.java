@@ -7,8 +7,9 @@ import javax.media.opengl.glu.GLUquadric;
 
 /**
  * Draws the balls for the molecule
+ * 
  * @author kandiatgrupp
- *
+ * 
  */
 
 public class displayBall {
@@ -18,8 +19,17 @@ public class displayBall {
 	float radius;
 	int slices;
 	int stacks;
-
-	public displayBall(GL2 gl, int currConf, GLU glu, float radiusf, int slices, int stacks) {
+	/**
+	 * Handles all the parameters
+	 * @param gl
+	 * @param currConf
+	 * @param glu
+	 * @param radiusf
+	 * @param slices
+	 * @param stacks
+	 */
+	public displayBall(GL2 gl, int currConf, GLU glu, float radiusf,
+			int slices, int stacks) {
 		this.gl = gl;
 		this.currConf = currConf;
 		this.glu = glu;
@@ -27,10 +37,13 @@ public class displayBall {
 		this.slices = slices;
 		this.stacks = stacks;
 		drawBall();
-		
 	}
-	
-	private void drawBall(){
+	/**
+	 * Method that draws the current current confirmation
+	 * using Open GL. The method creates a Iterator on a 
+	 * BallChain and prints every Ball.
+	 */
+	private void drawBall() {
 		BallChain current = Conformations.retConf(currConf);
 		Iterator<Ball> it = current.bollList.iterator();
 		float currX, currY, currZ;
@@ -42,15 +55,15 @@ public class displayBall {
 			currY = nextBall.getY();
 			currZ = nextBall.getZ();
 			colorB = nextBall.getc();
-			
+
 			gl.glLoadIdentity();
 			gl.glTranslatef(currX, currY, currZ);
-			if (colorB.equals("P")) {
+			if (colorB.equals("H")) {
 				float[] rgba = { 0.8f, 0.1f, 0.0f };
 				gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, rgba, 0);
 				gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, rgba, 0);
 				gl.glMaterialf(GL.GL_FRONT, GL2.GL_SHININESS, 0.5f);
-			} else if (colorB.equals("H")) {
+			} else if (colorB.equals("P")) {
 				float[] rgba = { 0.0f, 0.2f, 1.0f };
 				gl.glMaterialfv(GL.GL_FRONT, GL2.GL_AMBIENT, rgba, 0);
 				gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, rgba, 0);
@@ -71,6 +84,3 @@ public class displayBall {
 		}
 	}
 }
-	
-
-

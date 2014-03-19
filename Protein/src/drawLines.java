@@ -4,7 +4,7 @@ import java.util.Iterator;
 import javax.media.opengl.GL2;
 
 /**
- * Draws the lines for the molecules
+ * Draws the lines between the molecules
  * 
  * @author kandidatgrupp
  *
@@ -15,11 +15,21 @@ public class drawLines {
 	
 	int currConf;
 	GL2 gl;
-	
+	/**
+	 * Constructor with gl and the current confirmation
+	 * as parameters
+	 * @param gl
+	 * @param currConf
+	 */
 	public drawLines(GL2 gl,  int currConf) {
 		this.currConf = currConf;
 		this.gl = gl;
 	}
+	/**
+	 * Method that uses Open GL to draw the lines
+	 * between the two Balls that is supposed to
+	 * connect.
+	 */
 	public void doDrawLines(){
 		BallChain current = Conformations.retConf(currConf);
 		Iterator<Ball> it = current.bollList.iterator();

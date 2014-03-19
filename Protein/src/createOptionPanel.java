@@ -28,7 +28,7 @@ public class createOptionPanel implements ActionListener {
 		optionPanel.setLayout(new GridLayout(4, 2, 0, 5));
 		optGUI.setLayout(new BorderLayout(0, 10));
 		GUI.setLayout(new BorderLayout(5, 10));
-		
+
 		NPInput.setPreferredSize(new Dimension(200, 300));
 		GUI.setSize(WIDTH, HEIGHT);
 
@@ -39,14 +39,13 @@ public class createOptionPanel implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
 				ExAlg alg = new ExAlg();
 				alg.runAlg();
-				//new readChain("src/out.txt");
+				// new readChain("src/out.txt");
 				new readChain(alg.getAlgRes());
-				
-				
-				System.out.println("HEJSaN!!");
+				// BallFrame.getConf();
+
 			}
 		});
-		
+
 		JButton nextStep = new JButton("Next");
 		nextStep.setActionCommand("Next");
 		nextStep.addActionListener(new ActionListener() {
@@ -74,36 +73,36 @@ public class createOptionPanel implements ActionListener {
 		moveStep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-					Thread t = new Thread(new Runnable(){
-						public boolean run = true;
-					    @Override
-					    public void run(){
-					    	run = true;
-					        while(run){
-					        	if(BallFrame.getConf() == 0){
-					        		try{
-					        		Thread.sleep(4000);
-					        		}catch(InterruptedException e){
-					        			Thread.currentThread().interrupt();
-					        		}
-					        	}
-					        	
-					        	if (BallFrame.getConf() < Conformations.confSize() - 1) {
-									BallFrame.incrConf();
-								}
-					        	else{
-					        		run = false;
-					        	}
+				Thread t = new Thread(new Runnable() {
+					public boolean run = true;
 
-					            try{
-					                Thread.sleep(4000);
-					            }catch(InterruptedException e){
-					                Thread.currentThread().interrupt();
-					            }
-					        }
-					    }
-					});
-					t.start();
+					@Override
+					public void run() {
+						run = true;
+						while (run) {
+							if (BallFrame.getConf() == 0) {
+								try {
+									Thread.sleep(4000);
+								} catch (InterruptedException e) {
+									Thread.currentThread().interrupt();
+								}
+							}
+
+							if (BallFrame.getConf() < Conformations.confSize() - 1) {
+								BallFrame.incrConf();
+							} else {
+								run = false;
+							}
+
+							try {
+								Thread.sleep(4000);
+							} catch (InterruptedException e) {
+								Thread.currentThread().interrupt();
+							}
+						}
+					}
+				});
+				t.start();
 			}
 		});
 
@@ -122,6 +121,9 @@ public class createOptionPanel implements ActionListener {
 
 				Ball newBall = new Ball(xCoordinate, yCoordinate, zCoordinate,
 						MolColor);
+				if (Conformations.confSize() == 0) {
+					Conformations.addConf(new BallChain());
+				}
 				BallChain currentChain = Conformations.retConf(BallFrame
 						.getConf());
 				currentChain.addBall(newBall);
@@ -154,7 +156,7 @@ public class createOptionPanel implements ActionListener {
 		gridNextPrev.add(prevStep);
 		gridNextPrev.add(nextStep);
 		gridNextPrev.add(moveStep);
-		
+
 		gridNPI.add(new JLabel("Start inputstream"));
 		gridNPI.add(inpStream);
 		gridNPI.add(new JLabel("Conformations"));

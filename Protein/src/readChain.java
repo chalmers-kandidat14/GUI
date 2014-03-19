@@ -1,51 +1,60 @@
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
+/**
+ * Class that reads output from the list of coordinates created by the algorithm
+ * 
+ * @author Kandidatgrupp
+ * 
+ */
 
 public class readChain {
-	String line = null;
 	ArrayList<String> chainText = new ArrayList<String>();
 	private static int i;
-	readChain(ArrayList<String> chainText){
+
+	/**
+	 * The constructor takes an ArrayList of strings, then runs the method
+	 * readChaintext.
+	 * 
+	 * @param chainText
+	 */
+	readChain(ArrayList<String> chainText) {
 		i = 0;
 		this.chainText = chainText;
-		//this.line = line;
-		readChainText(chainText);
+		readText(chainText);
 	}
-	private void readChainText(ArrayList<String> chainText) {
-		//try {
-			//Scanner sc = new Scanner(new File(chainText));
-			BallChain chain = new BallChain();
-			Ball newBall;
 
-			while (i < chainText.size() + 1) {
-				String ball = chainText.get(i);
+	/**
+	 * method that handles the list of coordinates and makes them into balls and
+	 * chains.
+	 * 
+	 * @param chainText
+	 */
+	private void readText(ArrayList<String> chainText) {
+		BallChain chain = new BallChain();
+		Ball newBall;
 
-				if (ball.equals("")) {
-					Conformations.addConf(chain);
-					chain = new BallChain();
-					//ball = sc.nextLine();
-					i++;
-					ball = chainText.get(i);
-				}
+		while (i < (chainText.size())) {
+			String ball = chainText.get(i);
 
-				String[] ballSplit = ball.split(" ");
-				float xCoord = Float.parseFloat(ballSplit[0]);
-				float yCoord = Float.parseFloat(ballSplit[1]);
-				float zCoord = Float.parseFloat(ballSplit[2]);
-				String type = ballSplit[3];
-
-				newBall = new Ball(xCoord, yCoord, zCoord, type);
-				chain.addBall(newBall);
-				i++;
+			if (ball.equals("")) {
+				Conformations.addConf(chain);
+				chain = new BallChain();
+				ball = chainText.get(i + 1);
+				// i++;
 			}
-			Conformations.addConf(chain);
-			//sc.close();
-		//}// catch (IOException e) {
-			//System.err.println("could not read file, error: " + e);
-		//}
+			// if(i >= (chainText.size() +1)){
+			String[] ballSplit = ball.split(" ");
+			float xCoord = Float.parseFloat(ballSplit[0]);
+			float yCoord = Float.parseFloat(ballSplit[1]);
+			float zCoord = Float.parseFloat(ballSplit[2]);
+			String type = ballSplit[3];
+
+			newBall = new Ball(xCoord, yCoord, zCoord, type);
+			chain.addBall(newBall);
+			i++;
+			// }
+		}
+		Conformations.addConf(chain);
 	}
 
 }

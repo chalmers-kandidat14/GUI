@@ -1,7 +1,5 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Iterator;
-
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAnimatorControl;
@@ -9,7 +7,6 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
-import javax.media.opengl.glu.GLUquadric;
 
 import com.jogamp.opengl.util.FPSAnimator;
 
@@ -24,7 +21,8 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	private static int CANVAS_HEIGHT = 640; // height of the drawable
 	private static final int FPS = 60; // animator's target frames per second
 	private static float xLookAt, yLookAt = 0.0f;
-	private static float zLookAt = 30.0f;
+	//private static float zLookAt = 30.0f;
+	private static float zLookAt = 50.0f;
 	private static int currConf = 0;
 
 	public static GLCanvas createBallFrame() {
@@ -143,16 +141,25 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		gl.glEnable(GL2.GL_LIGHTING);
 
 		//display(gl);
-		new displayBall(gl, currConf, glu, radius, slices, stacks);
-
+		if(Conformations.confSize() == 0 ) {
+			gl.glLoadIdentity();
+		} else {
+			new displayBall(gl, currConf, glu, radius, slices, stacks);
+		}
+			
 		// disable lightning
 		gl.glDisable(GL2.GL_LIGHT1);
 		gl.glDisable(GL2.GL_LIGHTING);
 
 		//drawLines(gl);
 		new Grid(gl);
-		drawLines dl = new drawLines(gl, currConf);
-		dl.doDrawLines();
+		if(Conformations.confSize() == 0 ) {
+			gl.glLoadIdentity();
+		} else {
+			drawLines dl = new drawLines(gl, currConf);
+			dl.doDrawLines();
+		}
+		
 	}
 
 	private void setCamera(GL2 gl, GLU glu, float distance) {
@@ -162,7 +169,9 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 
 		// Perspective.
 		float widthHeightRatio = (float) getWidth() / (float) getHeight();
-		glu.gluPerspective(30, widthHeightRatio, 1, 1000);
+		//glu.gluPerspective(30, widthHeightRatio, 1, 1000);
+		glu.gluPerspective(45, widthHeightRatio, 1, 1000);
+		
 		glu.gluLookAt(-xLookAt, yLookAt, zLookAt, 0, 0, 0, 0, 1, 0);
 
 		// Change back to model view matrix.

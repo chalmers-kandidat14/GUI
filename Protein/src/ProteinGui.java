@@ -10,6 +10,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+/**
+ * The class containing the main function, it starts up the program.
+ * 
+ * @author kandidat group 35
+ * 
+ */
 public class ProteinGui {
 	private static String TITLE = "Protein";
 	static JFrame guiFrame;
@@ -18,20 +24,21 @@ public class ProteinGui {
 	private static int WIDTH = 1280;
 	private static int HEIGHT = 640;
 
-	// List of ball chains containing balls
-	// private static List<listOfBalls> chainList = new
-	// ArrayList<listOfBalls>();
-	private static String inputFile = "src/Exempel2.txt";
+	private static String inputFile = "src/Exempel.txt";
 	private static String inputFile3 = "src/Exempel3.txt";
-	//private static String outputAlg = "src/out.txt;
 
 	public static void main(String[] args) {
 		ProteinGui pg = new ProteinGui();
-		//readChain rc = new readChain();
 		pg.drawGui();
-		pg.readChainText(inputFile3);
+		// pg.readChainText(inputFile3);
+		// pg.readChainText(inputFile);
+		new BallFrame();
+		new Conformations();
 	}
 
+	/**
+	 * Method that draws the frame of the program.
+	 */
 	private void drawGui() {
 		// Run the GUI codes in the event-dispatching thread for thread safety
 		SwingUtilities.invokeLater(new Runnable() {
@@ -66,9 +73,7 @@ public class ProteinGui {
 	}
 
 	/**
-	 * Läser in kedjor, ska sedan skakpa en lista för listor av kedjor där
-	 * alla kedjor läggs in. För att sedan kunna swappa mellan dessa i guit.
-	 * en inre å yttre loop vore fördelaktigt.
+	 * Used to read txt files (the parameter chainText) containing coordinates.
 	 * 
 	 * @param chainText
 	 */
