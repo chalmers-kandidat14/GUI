@@ -1,12 +1,14 @@
 import java.awt.*;
 import java.awt.event.*;
-import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAnimatorControl;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
+import java.awt.Dimension;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 import com.jogamp.opengl.util.FPSAnimator;
 
@@ -14,7 +16,7 @@ import static javax.media.opengl.GL.*; // GL constants
 import static javax.media.opengl.GL2.*; // GL2 constants
 
 @SuppressWarnings("serial")
-public class BallFrame extends GLCanvas implements GLEventListener, KeyListener {
+public class BallFrame extends GLCanvas implements GLEventListener, KeyListener, MouseWheelListener {
 	// Define constants for the top-level container
 
 	private static int CANVAS_WIDTH = 720; // width of the drawable
@@ -25,6 +27,7 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	private static float zLookAt = 50.0f;
 	private static int currConf = 0;
 	private static boolean isClicked = false;
+	public static float zoomFactor = 1;
 
 	public static GLCanvas createBallFrame() {
 		// Create the OpenGL rendering canvas
@@ -186,7 +189,7 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 		// Perspective.
 		float widthHeightRatio = (float) getWidth() / (float) getHeight();
 		//glu.gluPerspective(30, widthHeightRatio, 1, 1000);
-		glu.gluPerspective(45, widthHeightRatio, 1, 1000);
+		glu.gluPerspective(zoomFactor * 20, widthHeightRatio, 1, 1000);
 		
 		glu.gluLookAt(-xLookAt, yLookAt, zLookAt, 0, 0, 0, 0, 1, 0);
 
@@ -241,5 +244,20 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	}
 
 	public void keyReleased(KeyEvent e) {
+	}
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		int notches = e.getWheelRotation();
+		if (notches < 0) {
+			zoomFactor = (float) (zoomFactor - 0.2);
+		}
+		else {
+			zoomFactor = (float) (zoomFactor + 0.2);
+			
+		}
+			
+		// TODO Auto-generated method stub
+		
 	}
 }

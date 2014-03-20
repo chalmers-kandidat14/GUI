@@ -27,7 +27,7 @@ public class createOptionPanel implements ActionListener {
 		gridNextPrev.setLayout(new GridLayout(1, 3, 0, 5));
 		gridNPI.setLayout(new GridLayout(7, 1, 10, 5));
 		NPInput.setLayout(new BorderLayout(0, 5));
-		algOpt.setLayout(new GridLayout(1,2,0,5));
+		algOpt.setLayout(new GridLayout(1, 2, 0, 5));
 		optionPanel.setLayout(new GridLayout(5, 2, 0, 5));
 		optGUI.setLayout(new BorderLayout(0, 10));
 		GUI.setLayout(new BorderLayout(5, 10));
@@ -178,8 +178,6 @@ public class createOptionPanel implements ActionListener {
 
 		NPInput.add(gridNPI, BorderLayout.PAGE_END);
 
-
-		
 		optionPanel.add(xCoord);
 		optionPanel.add(xTextField);
 		optionPanel.add(yCoord);
@@ -188,8 +186,8 @@ public class createOptionPanel implements ActionListener {
 		optionPanel.add(zTextField);
 		optionPanel.add(atomColor);
 		optionPanel.add(colTextField);
-		//optionPanel.add(inputAlgorithm);
-		//optionPanel.add(inputAlg);
+		// optionPanel.add(inputAlgorithm);
+		// optionPanel.add(inputAlg);
 
 		optGUI.add(optionPanel, BorderLayout.CENTER);
 		optGUI.add(coordTitle, BorderLayout.PAGE_START);
