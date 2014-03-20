@@ -24,6 +24,7 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 	//private static float zLookAt = 30.0f;
 	private static float zLookAt = 50.0f;
 	private static int currConf = 0;
+	private static boolean isClicked = false;
 
 	public static GLCanvas createBallFrame() {
 		// Create the OpenGL rendering canvas
@@ -35,9 +36,18 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 
 		canvas.addMouseMotionListener(new MouseMotionListener() {
 			@SuppressWarnings("unused")
+//			public void mouseClicked(MouseEvent e) {
+//				xLookAt = e.getX() - xLookAt;
+//				yLookAt = e.getY() - yLookAt;
+//			}
 			public void mouseClicked(MouseEvent e) {
-				xLookAt = e.getX() - xLookAt;
-				yLookAt = e.getY() - yLookAt;
+				xLookAt = e.getX();
+				yLookAt = e.getY();
+				if (isClicked) {
+					isClicked = false;
+				} else {
+					isClicked = true;
+				}
 			}
 
 			@Override
@@ -45,11 +55,17 @@ public class BallFrame extends GLCanvas implements GLEventListener, KeyListener 
 				xLookAt = (float) ((e.getPoint().getX() - xLookAt) / 10.0f) - 30f;
 				yLookAt = (float) ((e.getPoint().getY() - xLookAt) / 10.0f) - 30f;
 				translater(xLookAt, yLookAt);
+				
+				
 			}
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				// TODO Auto-generated method stub
+				if(isClicked)
+				{
+					System.out.println("musen e iklickad");
+				}
+								// TODO Auto-generated method stub
 
 			}
 		});

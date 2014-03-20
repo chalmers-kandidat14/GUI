@@ -9,6 +9,7 @@ import java.util.ArrayList;
  */
 public class ExAlg {
 	String line = "";
+	public String arg = "runhaskell  Main.hs HHHPHPPHHPH 100";
 	ArrayList<String> algChain = new ArrayList<String>();
 
 	/**
@@ -16,6 +17,12 @@ public class ExAlg {
 	 */
 	ExAlg() {
 
+	}
+	ExAlg(String hp, int iter){
+		this.arg = "runhaskell Main.hs " + hp + " " + iter;
+		System.out.println(hp + "   " + iter);
+		System.out.println(arg);
+		runAlg();
 	}
 
 	/**
@@ -33,7 +40,7 @@ public class ExAlg {
 	public void runAlg() {
 		try {
 			Process p = Runtime.getRuntime().exec(
-					"runhaskell  Main.hs HHHPHPPHHPH 100");
+					arg);
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					p.getInputStream()));

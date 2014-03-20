@@ -10,7 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class createOptionPanel implements ActionListener {
-	public static JTextField xTextField, yTextField, zTextField, colTextField;
+	public static JTextField xTextField, yTextField, zTextField, colTextField,
+			inputAlg;
 	private static int WIDTH = 520;
 	private static int HEIGHT = 300;
 
@@ -19,13 +20,15 @@ public class createOptionPanel implements ActionListener {
 		JPanel gridNPI = new JPanel();
 		JPanel gridNextPrev = new JPanel();
 		JPanel optionPanel = new JPanel();
+		JPanel algOpt = new JPanel();
 		JPanel optGUI = new JPanel();
 		JPanel GUI = new JPanel();
 
 		gridNextPrev.setLayout(new GridLayout(1, 3, 0, 5));
-		gridNPI.setLayout(new GridLayout(4, 1, 10, 5));
+		gridNPI.setLayout(new GridLayout(7, 1, 10, 5));
 		NPInput.setLayout(new BorderLayout(0, 5));
-		optionPanel.setLayout(new GridLayout(4, 2, 0, 5));
+		algOpt.setLayout(new GridLayout(1,2,0,5));
+		optionPanel.setLayout(new GridLayout(5, 2, 0, 5));
 		optGUI.setLayout(new BorderLayout(0, 10));
 		GUI.setLayout(new BorderLayout(5, 10));
 
@@ -37,11 +40,15 @@ public class createOptionPanel implements ActionListener {
 		inpStream.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				ExAlg alg = new ExAlg();
-				alg.runAlg();
-				// new readChain("src/out.txt");
-				new readChain(alg.getAlgRes());
-				// BallFrame.getConf();
+				String inAlg = (inputAlg.getText());
+				System.out.println(inAlg);
+				if (inAlg.isEmpty()) {
+					ExAlg alg = new ExAlg();
+					alg.runAlg();
+					new readChain(alg.getAlgRes());
+				} else {
+					new ReadAlgInput(inAlg);
+				}
 
 			}
 		});
@@ -134,10 +141,12 @@ public class createOptionPanel implements ActionListener {
 		JLabel xCoord = new JLabel("X: ");
 		JLabel yCoord = new JLabel("Y: ");
 		JLabel zCoord = new JLabel("Z: ");
+		JLabel inputAlgorithm = new JLabel("Type chain here");
 
 		xCoord.setHorizontalAlignment(JLabel.RIGHT);
 		yCoord.setHorizontalAlignment(JLabel.RIGHT);
 		zCoord.setHorizontalAlignment(JLabel.RIGHT);
+		inputAlgorithm.setHorizontalAlignment(JLabel.LEFT);
 
 		// JLabel colorTitle = new JLabel("Color on atom");
 		JLabel atomColor = new JLabel("Color: ");
@@ -153,6 +162,9 @@ public class createOptionPanel implements ActionListener {
 		colTextField = new JTextField(1);
 		colTextField.setHorizontalAlignment(JTextField.RIGHT);
 
+		inputAlg = new JTextField(1);
+		inputAlg.setHorizontalAlignment(JTextField.RIGHT);
+
 		gridNextPrev.add(prevStep);
 		gridNextPrev.add(nextStep);
 		gridNextPrev.add(moveStep);
@@ -161,9 +173,13 @@ public class createOptionPanel implements ActionListener {
 		gridNPI.add(inpStream);
 		gridNPI.add(new JLabel("Conformations"));
 		gridNPI.add(gridNextPrev);
+		gridNPI.add(inputAlgorithm);
+		gridNPI.add(inputAlg);
 
 		NPInput.add(gridNPI, BorderLayout.PAGE_END);
 
+
+		
 		optionPanel.add(xCoord);
 		optionPanel.add(xTextField);
 		optionPanel.add(yCoord);
@@ -172,6 +188,8 @@ public class createOptionPanel implements ActionListener {
 		optionPanel.add(zTextField);
 		optionPanel.add(atomColor);
 		optionPanel.add(colTextField);
+		//optionPanel.add(inputAlgorithm);
+		//optionPanel.add(inputAlg);
 
 		optGUI.add(optionPanel, BorderLayout.CENTER);
 		optGUI.add(coordTitle, BorderLayout.PAGE_START);
