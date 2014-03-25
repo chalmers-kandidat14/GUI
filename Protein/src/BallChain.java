@@ -32,4 +32,7 @@ public class BallChain {
 	public void addBall(Ball ball) {
 		bollList.add(ball);
 	}
+	public Ball getLastBall(){
+		return bollList.get(bollList.size() -1);
+	}
 }

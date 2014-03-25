@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.FlowLayout;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
@@ -46,7 +47,7 @@ public class ProteinGui {
 			public void run() {
 
 				guiFrame = new JFrame();
-				guiFrame.setLayout(new BorderLayout(10, 10));
+				guiFrame.setLayout(new FlowLayout(FlowLayout.LEFT));
 				guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				guiFrame.setTitle("Protein folding");
 				guiFrame.setSize(WIDTH, HEIGHT);
@@ -60,7 +61,7 @@ public class ProteinGui {
 
 				JPanel optFrame = createOptionPanel.createOpt();
 
-				guiFrame.add(optFrame, BorderLayout.CENTER);
+				guiFrame.add(optFrame);
 				guiFrame.add(new JLabel(""), BorderLayout.PAGE_END);
 				guiFrame.add(new JLabel(""), BorderLayout.PAGE_START);
 				guiFrame.add(new JLabel(""), BorderLayout.WEST);

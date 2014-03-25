@@ -47,7 +47,15 @@ public class createOptionPanel implements ActionListener {
 					alg.runAlg();
 					new readChain(alg.getAlgRes());
 				} else {
-					new ReadAlgInput(inAlg);
+					try {
+						new ReadAlgInput(inAlg);
+					} catch (NumberFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 
 			}
