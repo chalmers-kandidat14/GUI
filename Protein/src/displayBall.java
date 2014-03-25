@@ -48,7 +48,6 @@ public class displayBall {
 		Iterator<Ball> it = current.bollList.iterator();
 		float currX, currY, currZ;
 		String colorB;
-//lade till % 10
 		while (it.hasNext()) {
 			Ball nextBall = it.next();
 			currX = nextBall.getX();

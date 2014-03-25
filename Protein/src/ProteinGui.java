@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
@@ -33,7 +35,7 @@ public class ProteinGui {
 		pg.drawGui();
 		// pg.readChainText(inputFile3);
 		// pg.readChainText(inputFile);
-		new BallFrame();
+		//new BallFrame();
 		new Conformations();
 	}
 
@@ -47,7 +49,10 @@ public class ProteinGui {
 			public void run() {
 
 				guiFrame = new JFrame();
-				guiFrame.setLayout(new FlowLayout(FlowLayout.LEFT));
+				guiFrame.setLayout(new GridBagLayout());
+				GridBagConstraints c = new GridBagConstraints();
+				c.fill = GridBagConstraints.BOTH;
+				
 				guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				guiFrame.setTitle("Protein folding");
 				guiFrame.setSize(WIDTH, HEIGHT);
@@ -57,16 +62,20 @@ public class ProteinGui {
 				GLCanvas canvas = BallFrame.createBallFrame();
 				// Create the top-level container
 
-				contentPane.add(canvas, BorderLayout.EAST);
+				c.weightx = 1;
+				c.weighty = 1;
+				contentPane.add(canvas, c);
 
 				JPanel optFrame = createOptionPanel.createOpt();
 
+				c.weightx = 0;
 				guiFrame.add(optFrame);
-				guiFrame.add(new JLabel(""), BorderLayout.PAGE_END);
-				guiFrame.add(new JLabel(""), BorderLayout.PAGE_START);
-				guiFrame.add(new JLabel(""), BorderLayout.WEST);
+				guiFrame.add(new JLabel(""), c);
+				guiFrame.add(new JLabel(""), c);
+				guiFrame.add(new JLabel(""), c);
 
 				guiFrame.setTitle(TITLE);
+				guiFrame.setResizable(true);
 				guiFrame.pack();
 				guiFrame.setVisible(true);
 			}

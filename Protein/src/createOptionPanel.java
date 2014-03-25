@@ -32,7 +32,7 @@ public class createOptionPanel implements ActionListener {
 		optGUI.setLayout(new BorderLayout(0, 10));
 		GUI.setLayout(new BorderLayout(5, 10));
 
-		NPInput.setPreferredSize(new Dimension(200, 300));
+		NPInput.setPreferredSize(new Dimension(250, 300));
 		GUI.setSize(WIDTH, HEIGHT);
 
 		JButton inpStream = new JButton("Start inputstream");
@@ -94,13 +94,12 @@ public class createOptionPanel implements ActionListener {
 					@Override
 					public void run() {
 						run = true;
+						BallFrame.zeroConf();
 						while (run) {
-							if (BallFrame.getConf() == 0) {
-								try {
-									Thread.sleep(4000);
-								} catch (InterruptedException e) {
-									Thread.currentThread().interrupt();
-								}
+							try {
+								Thread.sleep(2000);
+							} catch (InterruptedException e) {
+								Thread.currentThread().interrupt();
 							}
 
 							if (BallFrame.getConf() < Conformations.confSize() - 1) {
@@ -109,11 +108,6 @@ public class createOptionPanel implements ActionListener {
 								run = false;
 							}
 
-							try {
-								Thread.sleep(4000);
-							} catch (InterruptedException e) {
-								Thread.currentThread().interrupt();
-							}
 						}
 					}
 				});

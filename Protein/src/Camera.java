@@ -1,13 +1,17 @@
 
 
 import java.awt.event.*;
+import java.util.Iterator;
+
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
+
+import static javax.media.opengl.GL.GL_LINES;
 import static javax.media.opengl.GL2.*; // GL2 constants
 
 
-public class Camera {
+public class Camera implements MouseWheelListener, MouseMotionListener, MouseListener, KeyListener {
 
 	private double phi, theta, rho;
 	private double posX, posY, posZ;
@@ -45,25 +49,6 @@ public class Camera {
 		
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
-
-		
-		// Enable the model-view transform
-//		gl.glMatrixMode(GL_MODELVIEW);
-//		gl.glLoadIdentity(); // reset
-//		
-//		
-//		// Change to projection matrix.
-//		gl.glMatrixMode(GL2.GL_PROJECTION);
-//		gl.glLoadIdentity();
-//
-//		// glu.gluPerspective(30, widthHeightRatio, 1, 1000);
-//		glu.gluPerspective(40, aspect, 1, 1000);
-//		glu.gluLookAt(1, 1, 1, 0, 0, 0, 0, 1, 0);
-//
-//		
-//		// Change back to model view matrix.
-//		gl.glMatrixMode(GL2.GL_MODELVIEW);
-//		gl.glLoadIdentity();
 	}
 	
 	public void reshape(GLU glu, GL2 gl, int width, int height) {
@@ -74,7 +59,7 @@ public class Camera {
 		// Setup perspective projection, with aspect ratio matches viewport
 		gl.glMatrixMode(GL_PROJECTION); // choose projection matrix
 		gl.glLoadIdentity(); // reset projection matrix
-		glu.gluPerspective(40.0, aspect, 0.1, 1000.0); // fovy, aspect, zNear,
+		glu.gluPerspective(40.0, aspect, 0.01, 1000.0); // fovy, aspect, zNear,
 														// zFar
 
 		// Enable the model-view transform
@@ -82,6 +67,30 @@ public class Camera {
 		gl.glLoadIdentity(); // reset
 	}
 	
+	public void drawCameraCursor(GL2 gl){
+		gl.glLoadIdentity();
+		gl.glLineWidth(2f);
+		gl.glBegin(GL_LINES);
+		
+		float x = (float) posX, y = (float) posY, z = (float) posZ;
+		float d = (float) rho * 0.009f;
+
+		
+		gl.glColor3f(0.0f, 1.0f, 0.0f); // Green
+		gl.glVertex3f(x - d, y, z);
+		gl.glVertex3f(x + d, y, z);
+		gl.glColor3f(1.0f, 0.0f, 0.0f); // Red
+		gl.glVertex3f(x, y - d, z);
+		gl.glVertex3f(x, y + d, z);
+		gl.glColor3f(0.0f, 0.0f, 1.0f); // Blue
+		gl.glVertex3f(x, y, z - d);
+		gl.glVertex3f(x, y, z + d);
+		
+		gl.glEnd();
+
+	}
+	
+	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		double amount = (double) e.getWheelRotation();
 		if (amount > 0)
@@ -90,8 +99,7 @@ public class Camera {
 			rho *= Math.pow(1.1, -amount);
 	}
 	
-	// 25 april 09:10
-	
+	@Override
 	public void mouseMoved(MouseEvent e) {
 		double x = e.getPoint().getX();
 		double y = e.getPoint().getY();
@@ -128,10 +136,12 @@ public class Camera {
 		ballY = y;
 	}
 	
+	@Override
 	public void mouseDragged(MouseEvent e) {
 		mouseMoved(e);
 	}
 	
+	@Override
 	public void mousePressed(MouseEvent e) {
 		if (e.getButton() == MouseEvent.BUTTON1) {
 			leftButton = 1;
@@ -141,6 +151,7 @@ public class Camera {
 		}
 	}
 	
+	@Override
 	public void mouseReleased(MouseEvent e) {
 		if (e.getButton() == MouseEvent.BUTTON1)
 			leftButton = 0;
@@ -148,4 +159,46 @@ public class Camera {
 		if (e.getButton() == MouseEvent.BUTTON3)
 			rightButton = 0;
 	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}	
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int keyCode = e.getKeyCode();
+		switch (keyCode) {
+			case KeyEvent.VK_Z: posZ += (float) rho * 0.01f; break;
+			case KeyEvent.VK_X: posZ -= (float) rho * 0.01f; break;
+			case KeyEvent.VK_A: posZ += (float) rho * 0.1f; break;
+			case KeyEvent.VK_S: posZ -= (float) rho * 0.1f; break;
+		}
+	}
+
 }

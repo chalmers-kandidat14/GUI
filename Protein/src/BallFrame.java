@@ -7,7 +7,6 @@ import javax.media.opengl.GLEventListener;
 import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
 import java.awt.Dimension;
-import java.awt.event.MouseWheelListener;
 
 import com.jogamp.opengl.util.FPSAnimator;
 
@@ -24,87 +23,23 @@ public class BallFrame extends GLCanvas implements GLEventListener{
 	private static int currConf = 0;
 	public static float zoomFactor = 1;
 	
-	private static Camera camera = new Camera(-1,-1,-1);
+	private static Camera camera = new Camera(0,0,0);
 
 	public static GLCanvas createBallFrame() {
 		// Create the OpenGL rendering canvas
 		GLCanvas canvas = new BallFrame();
 		canvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
-
+		canvas.setRealized(true);
+		
+		
 		final FPSAnimator animator = new FPSAnimator(canvas, FPS, true);
 		animator.start(); // start the animation loop
-
 		
-		canvas.addMouseWheelListener(new MouseWheelListener() {
-			@Override
-			public void mouseWheelMoved(MouseWheelEvent e) {
-				// TODO Auto-generated method stub
-				camera.mouseWheelMoved(e);
-			}
-		});
-		
-		canvas.addMouseMotionListener(new MouseMotionListener() {
-			@SuppressWarnings("unused")
-			public void mouseClicked(MouseEvent e) {
-				/*xLookAt = e.getX();
-				yLookAt = e.getY();
-				if (isClicked) {
-					isClicked = false;
-				} else {
-					isClicked = true;
-				}*/
-			}
-
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				//xLookAt = (float) ((e.getPoint().getX() - xLookAt) / 10.0f) - 30f;
-				//yLookAt = (float) ((e.getPoint().getY() - yLookAt) / 10.0f) - 30f;
-				//translater(xLookAt, yLookAt);
+		canvas.addMouseListener(camera);
+		canvas.addMouseMotionListener(camera);
+		canvas.addMouseWheelListener(camera);
+		canvas.addKeyListener(camera);
 				
-				camera.mouseDragged(e);
-			}
-
-			@Override
-			public void mouseMoved(MouseEvent e) {
-				// TODO Auto-generated method stub
-				camera.mouseMoved(e);
-			}
-		});
-
-		canvas.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				camera.mousePressed(e);
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				camera.mouseReleased(e);
-			}
-		
-		});
-		
 		return canvas;
 	}
 
@@ -175,21 +110,12 @@ public class BallFrame extends GLCanvas implements GLEventListener{
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width,
 			int height) {
 		GL2 gl = drawable.getGL().getGL2(); // get the OpenGL 2 graphics context
-
 		if (height == 0)
 			height = 1; // prevent divide by zero
-		float aspect = (float) width / height;
-
-		// Set the view port (display area) to cover the entire window
 		gl.glViewport(0, 0, width, height);
-		gl.glMatrixMode(GL_PROJECTION); // choose projection matrix
-		gl.glLoadIdentity(); // reset projection matrix
-		glu.gluPerspective(45.0, aspect, 0.1, 100.0); // fovy, aspect, zNear,
-														// zFar
 
-		// Enable the model-view transform
-		gl.glMatrixMode(GL_MODELVIEW);
-		gl.glLoadIdentity(); // reset
+		
+		camera.reshape(glu, gl, width, height);
 	}
 
 	@Override
@@ -234,6 +160,8 @@ public class BallFrame extends GLCanvas implements GLEventListener{
 			drawLines dl = new drawLines(gl, currConf);
 			dl.doDrawLines();
 		}
+		
+		camera.drawCameraCursor(gl);
 
 	}
 
